@@ -1,0 +1,13 @@
+---
+# handlers file for dhcp_dns_in_2
+
+- name: Restart Dhcpd
+  service: name=dhcpd state=restarted
+
+- name: Restart Sshd
+  service: name=sshd state=restarted
+
+- name: Restart Ntp
+  service: name=ntpd state=restarted
+
+...

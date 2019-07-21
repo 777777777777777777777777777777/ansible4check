@@ -1,0 +1,91 @@
+---
+# tasks file for mail_out_check
+
+############################### Postfix main.cf  ###############
+
+- name: Check main cf
+  copy: src={{ mail_in_files }}/main.cf dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_main_cf_check
+
+- name: Remove main cf key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger postfix main.cf has changed' replace='postfix main.cf has changed'
+  delegate_to: localhost
+  when: copy_main_cf_check is succeeded
+
+- name: Retrieving main cf Stat Data
+  stat: path={{ postfix_d }}/main.cf
+  register: main_cf_status
+  when: copy_main_cf_check is changed
+
+- name: Insert main cf Line a Log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger postfix main.cf has changed at {{ main_cf_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_main_cf_check is changed
+
+############################### Postfix blacklist  ###############
+
+- name: Check blacklist file
+  copy: src={{ mail_in_files }}/blacklist dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_blacklist_check
+
+- name: Remove blacklist file key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger postfix blacklist has changed' replace='postfix blacklist has changed'
+  delegate_to: localhost
+  when: copy_blacklist_check is succeeded
+
+- name: Retrieving blacklist file Stat Data
+  stat: path={{ postfix_d }}/blacklist
+  register: blacklist_status
+  when: copy_blacklist_check is changed
+
+- name: Insert blacklist file Line a Log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger postfix blacklist has changed at {{ main_cf_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_blacklist_check is changed
+
+############################### Postfix postgrey_whitelist_clients  ###############
+
+- name: Check postgrey_whitelist_clients file
+  copy: src={{ mail_in_files }}/postgrey_whitelist_clients dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_postgrey_whitelist_clients_check
+
+- name: Remove postgrey_whitelist_clients file key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger postfix postgrey_whitelist_clients has changed' replace='postfix postgrey_whitelist_clien$
+  delegate_to: localhost
+  when: copy_postgrey_whitelist_clients_check is succeeded
+
+- name: Retrieving postgrey_whitelist_clients file Stat Data
+  stat: path={{ postfix_d }}/postgrey_whitelist_clients
+  register: postgrey_whitelist_clients_status
+  when: copy_postgrey_whitelist_clients_check is changed
+
+- name: Insert postgrey_whitelist_clients file Line a Log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger postfix postgrey_whitelist_clients has changed at {{ main_cf_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_postgrey_whitelist_clients_check is changed
+
+############################### Postfix recipient_bcc  ###############
+
+- name: Check recipient_bcc file
+  copy: src={{ mail_in_files }}/recipient_bcc dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_recipient_bcc_check
+
+- name: Remove recipient_bcc file key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger postfix recipient_bcc has changed' replace='postfix recipient_bcc has changed'
+  delegate_to: localhost
+  when: copy_recipient_bcc_check is succeeded
+
+- name: Retrieving recipient_bcc file Stat Data
+  stat: path={{ postfix_d }}/recipient_bcc
+  register: recipient_bcc_status
+  when: copy_recipient_bcc_check is changed
+
+- name: Insert recipient_bcc file Line a Log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_t$
+  delegate_to: localhost
+  when: copy_recipient_bcc_check is changed
+

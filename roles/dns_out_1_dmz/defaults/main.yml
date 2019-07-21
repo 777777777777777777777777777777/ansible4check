@@ -1,0 +1,16 @@
+---
+# defaults file for dns_out_1_dmz
+
+chroot_etc_d: /var/named/chroot/etc
+chroot_named_d: /var/named/chroot/var/named
+
+ssh_d: /etc/ssh
+
+etc_d: /etc
+
+iptables_d: /etc/sysconfig
+
+local_files: /etc/ansible/roles/dns_out_1_dmz/files
+
+...
+

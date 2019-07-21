@@ -1,0 +1,407 @@
+---
+# tasks file for mail_in
+
+############################### Postfix main.cf  ###############
+
+- name: Check main cf Postfix
+  copy: src=main.cf dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_main_cf_check
+
+- name: Ask About main cf Postfix
+  pause:
+    prompt: "Изменить main.cf Postfix ? Do You Want to Change main.cf Postfix? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_main_cf
+  when: copy_main_cf_check is changed
+
+- name: Copy main cf Postfix
+  copy: src=main.cf dest={{ postfix_d }} mode=644
+  when: ask_main_cf.user_input == 'yes'
+  ignore_errors: yes
+
+  notify:
+   - Restart Postfix
+
+- name: Replace main cf Postfix to localhost
+  fetch: src={{ postfix_d }}/main.cf dest={{ local_files }}/main.cf flat=yes
+  when: ask_main_cf.user_input == 'replace'
+  ignore_errors: yes
+
+############################### Postfix blacklist  ###############
+
+- name: Check blacklist Postfix
+  copy: src=blacklist dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_blacklist_check
+
+- name: Ask About blacklist Postfix
+  pause:
+    prompt: "Изменить blacklist Postfix ? Do You Want to Change blacklist Postfix? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_blacklist
+  when: copy_blacklist_check is changed
+
+- name: Copy blacklist Postfix
+  copy: src=blacklist dest={{ postfix_d }} mode=644
+  when: ask_blacklist.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace blacklist Postfix to localhost
+  fetch: src={{ postfix_d }}/blacklist dest={{ local_files }}/blacklist flat=yes
+  when: ask_blacklist.user_input == 'replace'
+  ignore_errors: yes
+
+############################### Postfix postgrey_whitelist_clients  ###############
+
+- name: Check postgrey_whitelist_clients Postfix
+  copy: src=postgrey_whitelist_clients dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_postgrey_whitelist_clients_check
+
+- name: Ask About postgrey_whitelist_clients Postfix
+  pause:
+    prompt: "Изменить postgrey_whitelist_clients Postfix ? Do You Want to Change postgrey_whitelist_clients Postfix? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_postgrey_whitelist_clients
+  when: copy_postgrey_whitelist_clients_check is changed
+
+- name: Copy postgrey_whitelist_clients Postfix
+  copy: src=postgrey_whitelist_clients dest={{ postfix_d }} mode=644
+  when: ask_postgrey_whitelist_clients.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace postgrey_whitelist_clients Postfix to localhost
+  fetch: src={{ postfix_d }}/postgrey_whitelist_clients dest={{ local_files }}/postgrey_whitelist_clients flat=yes
+  when: ask_postgrey_whitelist_clients.user_input == 'replace'
+  ignore_errors: yes
+
+
+############################### Postfix recipient_bcc  ###############
+
+- name: Check recipient_bcc Postfix
+  copy: src=recipient_bcc dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_recipient_bcc_check
+
+- name: Ask About recipient_bcc Postfix
+  pause:
+    prompt: "Изменить recipient_bcc Postfix ? Do You Want to Change recipient_bcc Postfix? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_recipient_bcc
+  when: copy_recipient_bcc_check is changed
+
+- name: Copy recipient_bcc Postfix
+  copy: src=recipient_bcc dest={{ postfix_d }} mode=644
+  when: ask_recipient_bcc.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace recipient_bcc Postfix to localhost
+  fetch: src={{ postfix_d }}/recipient_bcc dest={{ local_files }}/recipient_bcc flat=yes
+  when: ask_recipient_bcc.user_input == 'replace'
+  ignore_errors: yes
+
+############################### Postfix virtual  ###############
+
+- name: Check virtual Postfix
+  copy: src=virtual dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_virtual_check
+
+- name: Ask About virtual Postfix
+  pause:
+    prompt: "Изменить virtual Postfix ? Do You Want to Change virtual Postfix? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_virtual
+  when: copy_virtual_check is changed
+
+- name: Copy virtual Postfix
+  copy: src=virtual dest={{ postfix_d }} mode=644
+  when: ask_virtual.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace virtual Postfix to localhost
+  fetch: src={{ postfix_d }}/virtual dest={{ local_files }}/virtual flat=yes
+  when: ask_virtual.user_input == 'replace'
+  ignore_errors: yes
+
+############################### Clam config ###############
+
+- name: Check clamd conf 
+  copy: src=clamd.conf dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_clamd_conf_check
+
+- name: Ask About clamd conf 
+  pause:
+    prompt: "Изменить clamd.conf ? Do You Want to Change clamd.conf ? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_clamd_conf
+  when: copy_clamd_conf_check is changed
+
+- name: Copy clamd conf
+  copy: src=clamd.conf dest={{ etc_d }} mode=644
+  when: ask_clamd_conf.user_input == 'yes'
+  ignore_errors: yes
+
+  notify:
+   - Restart Clamd
+
+- name: Replace clamd conf  to localhost
+  fetch: src={{ etc_d }}/clamd.conf dest={{ local_files }}/clamd.conf flat=yes
+  when: ask_clamd_conf.user_input == 'replace'
+  ignore_errors: yes
+
+############################### Httpd config ###############
+
+- name: Check Httpd conf
+  copy: src=httpd.conf dest={{ httpd_d }} mode=644
+  check_mode: yes
+  register: copy_httpd_conf_check
+
+- name: Ask About Httpd conf
+  pause:
+    prompt: "Изменить httpd.conf ? Do You Want to Change Httpdd.conf ? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_httpd_conf
+  when: copy_httpd_conf_check is changed
+
+- name: Copy Httpd conf
+  copy: src=httpd.conf dest={{ httpd_d }} mode=644
+  when: ask_httpd_conf.user_input == 'yes'
+  ignore_errors: yes
+
+  notify:
+   - Restart Httpd
+
+- name: Replace Httpd conf  to localhost
+  fetch: src={{ httpd_d }}/httpd.conf dest={{ local_files }}/httpd.conf flat=yes
+  when: ask_httpd_conf.user_input == 'replace'
+  ignore_errors: yes
+
+
+############################### Ssh ###############
+
+- name: Check Ssh Config
+  copy: src=ssh_config dest={{ ssh_d }} mode=644
+  check_mode: yes
+  register: copy_ssh_check
+
+- name: Ask About Ssh Config
+  pause:
+    prompt: "Изменить Конфиг Клиента Ssh? Do You Want to Change Ssh Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_ssh
+  when: copy_ssh_check is changed
+
+- name: Copy Ssh Config
+  copy: src=ssh_config dest={{ ssh_d }} mode=644
+  when: ask_ssh.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace Ssh Config to localhost
+  fetch: src={{ ssh_d }}/ssh_config dest={{ local_files }}/ssh_config flat=yes
+  when: ask_ssh.user_input == 'replace'
+  ignore_errors: yes
+
+####################### SSHD #####################
+
+- name: Check Sshd Config
+  copy: src=sshd_config dest={{ ssh_d }} mode=600
+  check_mode: yes
+  register: copy_sshd_check
+
+- name: Ask About Sshd Config
+  pause:
+    prompt: "Изменить Конфиг Сервера Ssh? Do You Want to Change Sshd Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_sshd
+  when: copy_sshd_check is changed
+
+
+- name: Copy Sshd Config
+  copy: src=sshd_config dest={{ ssh_d }} mode=600
+  when: ask_sshd.user_input == 'yes'
+  ignore_errors: yes
+
+  notify:
+   - Restart Sshd
+
+- name: Replace Sshd Config to localhost
+  fetch: src={{ ssh_d }}/sshd_config dest={{ local_files }}/sshd_config flat=yes
+  when: ask_sshd.user_input == 'replace'
+  ignore_errors: yes
+
+################################ Ntp ###########################
+
+- name: Check Ntp Config
+  copy: src=ntp.conf dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_ntp_check
+
+- name: Ask About Ntp Config
+  pause:
+    prompt: "Изменить Ntp Конфиг? Do You Want to Change Ntp Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_ntp
+  when: copy_ntp_check is changed
+
+- name: Copy Ntp Config
+  copy: src=ntp.conf dest={{ etc_d }} mode=644
+  when: ask_ntp.user_input == 'yes'
+  ignore_errors: yes
+
+  notify:
+    - Restart Ntp
+
+- name: Replace Ntp Config to localhost
+  fetch: src={{ etc_d }}/ntp.conf dest={{ local_files }}/ntp.conf flat=yes
+  when: ask_ntp.user_input == 'replace'
+  ignore_errors: yes
+
+####################### Resolv #################
+
+- name: Check Resolv Config
+  copy: src=resolv.conf dest={{ etc_d }} mode=664
+  check_mode: yes
+  register: copy_resolv_check
+
+- name: Ask About Resolv Config
+  pause:
+    prompt: "Изменить Конфигурацию Resolv? Do You Want to Change Resolv Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_resolv
+  when: copy_resolv_check is changed
+
+- name: Copy Resolv Config
+  copy: src=resolv.conf dest={{ etc_d }} mode=664
+  when: ask_resolv.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace Resolv Conf to localhost
+  fetch: src={{ etc_d }}/resolv.conf dest={{ local_files }}/resolv.conf flat=yes
+  when: ask_resolv.user_input == 'replace'
+  ignore_errors: yes
+
+########################### Hosts ####################
+
+- name: Check Hosts Config
+  copy: src=hosts dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_hosts_check
+
+- name: Ask About Hosts Config
+  pause:
+    prompt: "Изменить Конфиг Hosts? Do You Want to Change Hosts Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_hosts
+  when: copy_hosts_check is changed
+
+- name: Copy Hosts Config
+  copy: src=hosts dest={{ etc_d }} mode=644
+  when: ask_hosts.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace Hosts Conf to localhost
+  fetch: src={{ etc_d }}/hosts dest={{ local_files }}/hosts flat=yes
+  when: ask_hosts.user_input == 'replace'
+  ignore_errors: yes
+
+########################### Iptables ####################
+
+- name: Check Iptables config
+  copy: src=iptables dest={{ iptables_d }} mode=600
+  check_mode: yes
+  register: copy_iptables_check
+
+- name: Ask About Iptables config
+  pause:
+    prompt: "Изменить iptables config ? Do You Want to Change iptables config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_iptables
+  when: copy_iptables_check is changed
+
+- name: Copy Iptables config
+  copy: src=iptables dest={{ iptables_d }} mode=644
+  when: ask_iptables.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace Iptables config to localhost
+  fetch: src={{ iptables_d }}/iptables dest={{ local_files }}/iptables flat=yes
+  when: ask_iptables.user_input == 'replace'
+  ignore_errors: yes
+
+########################### Shadow ####################
+
+- name: Check shadow File
+  copy: src=shadow dest={{ etc_d }} mode=0000
+  check_mode: yes
+  register: copy_shadow_check
+
+- name: Ask About shadow File
+  pause:
+    prompt: "Изменить Файл shadow? Do You Want to Change shadow file? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_shadow
+  when: copy_shadow_check is changed
+
+- name: Copy shadow File
+  copy: src=shadow dest={{ etc_d }} mode=000
+  when: ask_shadow.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace shadow File to localhost
+  fetch: src={{ etc_d }}/shadow dest={{ local_files }}/shadow flat=yes
+  when: ask_shadow.user_input == 'replace'
+  ignore_errors: yes
+
+########################### Passwd ####################
+
+- name: Check passwd File
+  copy: src=passwd dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_passwd_check
+
+- name: Ask About passwd File
+  pause:
+    prompt: "Изменить Файл passwd? Do You Want to Change passwd file? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_passwd
+  when: copy_passwd_check is changed
+
+- name: Copy passwd File
+  copy: src=passwd dest={{ etc_d }} mode=644
+  when: ask_passwd.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace passwd File to localhost
+  fetch: src={{ etc_d }}/passwd dest={{ local_files }}/passwd flat=yes
+  when: ask_passwd.user_input == 'replace'
+  ignore_errors: yes
+
+########################### Group ####################
+
+- name: Check group File
+  copy: src=group dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_group_check
+
+- name: Ask About group File
+  pause:
+    prompt: "Изменить Файл group? Do You Want to Change group file? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_group
+  when: copy_group_check is changed
+
+- name: Copy group File
+  copy: src=group dest={{ etc_d }} mode=644
+  when: ask_group.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace group File to localhost
+  fetch: src={{ etc_d }}/group dest={{ local_files }}/group flat=yes
+  when: ask_group.user_input == 'replace'
+  ignore_errors: yes
+
+...
+

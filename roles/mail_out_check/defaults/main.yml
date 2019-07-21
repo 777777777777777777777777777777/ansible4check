@@ -1,0 +1,15 @@
+---
+# defaults file for mail_out_check
+
+ssh_d: /etc/ssh
+etc_d: /etc
+
+iptables_d: /etc/sysconfig
+
+postfix_d: /etc/postfix
+
+nginx_d: /etc/nginx/conf.d
+
+mail_out_files: /etc/ansible/roles/mail_out/files
+mail_out_log: /var/log/ansible/mail_out.log
+

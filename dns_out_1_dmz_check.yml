@@ -1,0 +1,10 @@
+---
+- name: dns_out_1_dmz check config
+  hosts: dns_out_master
+  become: yes
+
+  roles:
+     - dns_out_1_dmz_check
+...
+
+

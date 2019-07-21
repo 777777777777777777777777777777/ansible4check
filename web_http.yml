@@ -1,0 +1,9 @@
+---
+- name: web_http copy config
+  hosts: web_http
+  become: yes
+
+  roles:
+     - web_http
+...
+

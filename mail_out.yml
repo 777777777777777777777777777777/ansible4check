@@ -1,0 +1,12 @@
+---
+- name: mail_out copy config
+  hosts: mail_out
+  become: yes
+
+  roles:
+     - mail_out
+...
+
+
+
+

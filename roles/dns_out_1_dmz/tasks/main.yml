@@ -1,0 +1,832 @@
+---
+# tasks file for dns_out_1_dmz
+
+############################### NAMED CONF  ###############
+
+- name: Check Named Conf
+  copy: src=namec.conf dest={{ chroot_etc_d }} mode=644
+  check_mode: yes
+  register: copy_namec_check
+
+- name: Ask About Named Conf
+  pause:
+    prompt: "Изменить named conf ? Do You Want to Change named conf? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_named
+  when: copy_namec_check is changed
+
+- name: Copy Named Conf
+  copy: src=namec.conf dest={{ chroot_etc_d }} mode=644
+  when: ask_namec.user_input == 'yes'
+  ignore_errors: yes
+
+  notify:
+   - Restart Named
+
+- name: Replace Named Conf to localhost
+  fetch: src={{ chroot_etc_d }}/namec.conf dest={{ local_files }}/namec.conf flat=yes
+  when: ask_namec.user_input == 'replace'
+  ignore_errors: yes
+
+############################### 0.0.1.0  ###############
+
+- name: Check 0 0 1 0 config
+  copy: src=0.0.1.0 dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_1_check
+
+- name: Ask About 0 0 1 0 config
+  pause:
+    prompt: "Изменить 0.0.1.0 Зону ? Do You Want to Change 0.0.1.0 config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_1
+  when: copy_1_check is changed
+
+- name: Copy 0 0 1 0 config
+  copy: src=0.0.1.0 dest={{ chroot_namec_d }} mode=644
+  when: ask_1.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace 0 0 1 0 config to localhost
+  fetch: src={{ chroot_namec_d }}/0.0.1.0 dest={{ local_files }}/0.0.1.0 flat=yes
+  when: ask_1.user_input == 'replace'
+  ignore_errors: yes
+
+############################### 0.0.2.0  ###############
+
+- name: Check 0 0 2 0 config
+  copy: src=0.0.2.0 dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_2_check
+
+- name: Ask About 0 0 2 0 config
+  pause:
+    prompt: "Изменить 0.0.2.0 Зону ? Do You Want to Change 0.0.2.0 config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_2
+  when: copy_2_check is changed
+
+- name: Copy 0 0 2 0 config
+  copy: src=0.0.2.0 dest={{ chroot_namec_d }} mode=644
+  when: ask_2.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace 0 0 2 0 config to localhost
+  fetch: src={{ chroot_namec_d }}/0.0.2.0 dest={{ local_files }}/0.0.2.0 flat=yes
+  when: ask_2.user_input == 'replace'
+  ignore_errors: yes
+
+############################### 0.0.3.0  ###############
+
+- name: Check 0 0 3 0 config
+  copy: src=0.0.3.0 dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_3_check
+
+- name: Ask About 0 0 3 0 config
+  pause:
+    prompt: "Изменить 0.0.3.0 Зону ? Do You Want to Change 0.0.3.0 config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_3
+  when: copy_3_check is changed
+
+- name: Copy 0 0 3 0 config
+  copy: src=0.0.3.0 dest={{ chroot_namec_d }} mode=644
+  when: ask_3.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace 0 0 3 0 config to localhost
+  fetch: src={{ chroot_namec_d }}/0.0.3.0 dest={{ local_files }}/0.0.3.0 flat=yes
+  when: ask_3.user_input == 'replace'
+  ignore_errors: yes
+
+############################### 0.0.4.0  ###############
+
+- name: Check 0 0 4 0 config
+  copy: src=0.0.4.0 dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_4_check
+
+- name: Ask About 0 0 4 0 config
+  pause:
+    prompt: "Изменить 0.0.4.0 Зону ? Do You Want to Change 0.0.4.0 config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_4
+  when: copy_4_check is changed
+
+- name: Copy 0 0 4 0 config
+  copy: src=0.0.4.0 dest={{ chroot_namec_d }} mode=644
+  when: ask_4.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace 0 0 4 0 config to localhost
+  fetch: src={{ chroot_namec_d }}/0.0.4.0 dest={{ local_files }}/0.0.4.0 flat=yes
+  when: ask_4.user_input == 'replace'
+  ignore_errors: yes
+
+############################### a.example.ext  ###############
+
+- name: Check a example ext config
+  copy: src=a.example.ext dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_a_example_ext_check
+
+- name: Ask About a example ext config
+  pause:
+    prompt: "Изменить a.example.ext Зону ? Do You Want to Change a.example.ext config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_a_example_ext
+  when: copy_a_example_ext_check is changed
+
+- name: Copy a example ext config
+  copy: src=a.example.ext dest={{ chroot_namec_d }} mode=644
+  when: ask_a_example_ext.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace a example ext config to localhost
+  fetch: src={{ chroot_namec_d }}/a.example.ext dest={{ local_files }}/a.example.ext flat=yes
+  when: ask_a_example_ext.user_input == 'replace'
+  ignore_errors: yes
+
+############################### a.example.int  ###############
+
+- name: Check a example int config
+  copy: src=a.example.int dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_a_example_int_check
+
+- name: Ask About a example int config
+  pause:
+    prompt: "Изменить a.example.int Зону ? Do You Want to Change a.example.int config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_a_example_int
+  when: copy_a_example_int_check is changed
+
+- name: Copy a example int config
+  copy: src=a.example.int dest={{ chroot_namec_d }} mode=644
+  when: ask_a_example_int.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace a example int config to localhost
+  fetch: src={{ chroot_namec_d }}/a.example.int dest={{ local_files }}/a.example.int flat=yes
+  when: ask_a_example_int.user_input == 'replace'
+  ignore_errors: yes
+
+############################### b.a.example.ext  ###############
+
+- name: Check b a example ext config
+  copy: src=b.a.example.ext dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_b_a_example_ext_check
+
+- name: Ask About b a example ext config
+  pause:
+    prompt: "Изменить b.a.example.ext Зону ? Do You Want to Change b.a.example.ext config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_b_a_example_ext
+  when: copy_b_a_example_ext_check is changed
+
+- name: Copy b a example ext config
+  copy: src=b.a.example.ext dest={{ chroot_namec_d }} mode=644
+  when: ask_b_a_example_ext.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace b a example ext config to localhost
+  fetch: src={{ chroot_namec_d }}/b.a.example.ext dest={{ local_files }}/b.a.example.ext flat=yes
+  when: ask_b_a_example_ext.user_input == 'replace'
+  ignore_errors: yes
+
+############################### b.a.example.int  ###############
+
+- name: Check b a example int config
+  copy: src=b.a.example.int dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_b_a_example_int_check
+
+- name: Ask About b a example int config
+  pause:
+    prompt: "Изменить b.a.example.int Зону ? Do You Want to Change b.a.example.int config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_b_a_example_int
+  when: copy_b_a_example_int_check is changed
+
+- name: Copy b a example int config
+  copy: src=b.a.example.int dest={{ chroot_namec_d }} mode=644
+  when: ask_b_a_example_int.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace b a example int config to localhost
+  fetch: src={{ chroot_namec_d }}/b.a.example.int dest={{ local_files }}/b.a.example.int flat=yes
+  when: ask_b_a_example_int.user_input == 'replace'
+  ignore_errors: yes
+
+############################### c.1.example.ext  ###############
+
+- name: Check c 1 example ext config
+  copy: src=c.1.example.ext dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_c_1_example_ext_check
+
+- name: Ask About c 1 example ext config
+  pause:
+    prompt: "Изменить c.1.example.ext Зону ? Do You Want to Change c.1.example.ext config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_c_1_example_ext
+  when: copy_c_1_example_ext_check is changed
+
+- name: Copy c 1 example ext config
+  copy: src=c.1.example.ext dest={{ chroot_namec_d }} mode=644
+  when: ask_c_1_example_ext.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace c 1 example ext config to localhost
+  fetch: src={{ chroot_namec_d }}/c.1.example.ext dest={{ local_files }}/c.1.example.ext flat=yes
+  when: ask_c_1_example_ext.user_input == 'replace'
+  ignore_errors: yes
+
+############################### c.1.example.int  ###############
+
+- name: Check c 1 example int config
+  copy: src=c.1.example.int dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_c_1_example_int_check
+
+- name: Ask About c 1 example int config
+  pause:
+    prompt: "Изменить c.1.example.int Зону ? Do You Want to Change c.1.example.int config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_c_1_example_int
+  when: copy_c_1_example_int_check is changed
+
+- name: Copy c 1 example int config
+  copy: src=c.1.example.int dest={{ chroot_namec_d }} mode=644
+  when: ask_c_1_example_int.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace c 1 example int config to localhost
+  fetch: src={{ chroot_namec_d }}/c.1.example.int dest={{ local_files }}/c.1.example.int flat=yes
+  when: ask_c_1_example_int.user_input == 'replace'
+  ignore_errors: yes
+
+############################### d.1.example.ext  ###############
+
+- name: Check d 1 example ext config
+  copy: src=d.1.example.ext dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_d_1_example_ext_check
+
+- name: Ask About d 1 example ext config
+  pause:
+    prompt: "Изменить d.1.example.ext Зону ? Do You Want to Change d.1.example.ext config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_d_1_example_ext
+  when: copy_d_1_example_ext_check is changed
+
+- name: Copy d 1 example ext config
+  copy: src=d.1.example.ext dest={{ chroot_namec_d }} mode=644
+  when: ask_d_1_example_ext.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace d 1 example ext config to localhost
+  fetch: src={{ chroot_namec_d }}/d.1.example.ext dest={{ local_files }}/d.1.example.ext flat=yes
+  when: ask_d_1_example_ext.user_input == 'replace'
+  ignore_errors: yes
+
+
+############################### d.1.example.int  ###############
+
+- name: Check d 1 example int config
+  copy: src=d.1.example.int dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_d_1_example_int_check
+
+- name: Ask About d 1 example int config
+  pause:
+    prompt: "Изменить d.1.example.int Зону ? Do You Want to Change d.1.example.int config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_d_1_example_int
+  when: copy_d_1_example_int_check is changed
+
+- name: Copy d 1 example int config
+  copy: src=d.1.example.int dest={{ chroot_namec_d }} mode=644
+  when: ask_d_1_example_int.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace d 1 example int config to localhost
+  fetch: src={{ chroot_namec_d }}/d.1.example.int dest={{ local_files }}/d.1.example.int flat=yes
+  when: ask_d_1_example_int.user_input == 'replace'
+  ignore_errors: yes
+
+############################### h.a.example.ext  ###############
+
+- name: Check h a example ext config
+  copy: src=h.a.example.ext dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_h_a_example_ext_check
+
+- name: Ask About h a example ext config
+  pause:
+    prompt: "Изменить h.a.example.ext Зону ? Do You Want to Change h.a.example.ext config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_h_a_example_ext
+  when: copy_h_a_example_ext_check is changed
+
+- name: Copy h a example ext config
+  copy: src=h.a.example.ext dest={{ chroot_namec_d }} mode=644
+  when: ask_h_a_example_ext.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace h a example ext config to localhost
+  fetch: src={{ chroot_namec_d }}/h.a.example.ext dest={{ local_files }}/h.a.example.ext flat=yes
+  when: ask_h_a_example_ext.user_input == 'replace'
+  ignore_errors: yes
+
+############################### h.a.example.int  ###############
+
+- name: Check h a example int config
+  copy: src=h.a.example.int dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_h_a_example_int_check
+
+- name: Ask About h a example int config
+  pause:
+    prompt: "Изменить h.a.example.int Зону ? Do You Want to Change h.a.example.int config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_h_a_example_int
+  when: copy_h_a_example_int_check is changed
+
+- name: Copy h a example int config
+  copy: src=h.a.example.int dest={{ chroot_namec_d }} mode=644
+  when: ask_h_a_example_int.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace h a example int config to localhost
+  fetch: src={{ chroot_namec_d }}/h.a.example.int dest={{ local_files }}/h.a.example.int flat=yes
+  when: ask_h_a_example_int.user_input == 'replace'
+  ignore_errors: yes
+
+############################### h.int  ###############
+
+- name: Check h int config
+  copy: src=h.int dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_h_int_check
+
+- name: Ask About h int config
+  pause:
+    prompt: "Изменить h.int Зону ? Do You Want to Change h.int config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_h_int
+  when: copy_h_int_check is changed
+
+- name: Copy h int config
+  copy: src=h.int dest={{ chroot_namec_d }} mode=644
+  when: ask_h_int.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace h int config to localhost
+  fetch: src={{ chroot_namec_d }}/h.int dest={{ local_files }}/h.int flat=yes
+  when: ask_h_int.user_input == 'replace'
+  ignore_errors: yes
+
+############################### 1.example.ext  ###############
+
+- name: Check 1 example ext config
+  copy: src=1.example.ext dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_1_example_ext_check
+
+- name: Ask About 1 example ext config
+  pause:
+    prompt: "Изменить 1.example.ext Зону ? Do You Want to Change 1.example.ext config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_1_example_ext
+  when: copy_1_example_ext_check is changed
+
+- name: Copy 1 example ext config
+  copy: src=1.example.ext dest={{ chroot_namec_d }} mode=644
+  when: ask_1_example_ext.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace 1 example ext config to localhost
+  fetch: src={{ chroot_namec_d }}/1.example.ext dest={{ local_files }}/1.example.ext flat=yes
+  when: ask_1_example_ext.user_input == 'replace'
+  ignore_errors: yes
+
+############################### 1.example.int  ###############
+
+- name: Check 1_example_int config
+  copy: src=1.example.int dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_1_example_int_check
+
+- name: Ask About 1_example_int config
+  pause:
+    prompt: "Изменить 1.example.int Зону ? Do You Want to Change 1.example.int config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_1_example_int
+  when: copy_1_example_int_check is changed
+
+- name: Copy 1_example_int config
+  copy: src=1.example.int dest={{ chroot_namec_d }} mode=644
+  when: ask_1_example_int.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace 1_example_int config to localhost
+  fetch: src={{ chroot_namec_d }}/1.example.int dest={{ local_files }}/1.example.int flat=yes
+  when: ask_1_example_int.user_input == 'replace'
+  ignore_errors: yes
+
+############################### 1.example.int.org  ###############
+
+- name: Check 1 example int org config
+  copy: src=1.example.int.org dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_1_example_int_org_check
+
+- name: Ask About 1 example int org config
+  pause:
+    prompt: "Изменить 1.example.int.org Зону ? Do You Want to Change 1.example.int.org config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_1_example_int_org
+  when: copy_1_example_int_org_check is changed
+
+- name: Copy 1 example int org config
+  copy: src=1.example.int.org dest={{ chroot_namec_d }} mode=644
+  when: ask_1_example_int_org.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace 1 example int org config to localhost
+  fetch: src={{ chroot_namec_d }}/1.example.int.org dest={{ local_files }}/1.example.int.org flat=yes
+  when: ask_1_example_int_org.user_input == 'replace'
+  ignore_errors: yes
+
+############################### m.example.ext  ###############
+
+- name: Check m example ext config
+  copy: src=m.example.ext dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_m_example_ext_check
+
+- name: Ask About m example ext config
+  pause:
+    prompt: "Изменить m.example.ext Зону ? Do You Want to Change m.example.ext config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_m_example_ext
+  when: copy_m_example_ext_check is changed
+
+- name: Copy m example ext config
+  copy: src=m.example.ext dest={{ chroot_namec_d }} mode=644
+  when: ask_m_example_ext.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace m example ext config to localhost
+  fetch: src={{ chroot_namec_d }}/m.example.ext dest={{ local_files }}/m.example.ext flat=yes
+  when: ask_m_example_ext.user_input == 'replace'
+  ignore_errors: yes
+
+############################### m.example.int  ###############
+
+- name: Check m example int config
+  copy: src=m.example.int dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_m_example_int_check
+
+- name: Ask About m example int config
+  pause:
+    prompt: "Изменить m.example.int Зону ? Do You Want to Change m.example.int config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_m_example_int
+  when: copy_m_example_int_check is changed
+
+- name: Copy m example int config
+  copy: src=m.example.int dest={{ chroot_namec_d }} mode=644
+  when: ask_m_example_int.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace m example int config to localhost
+  fetch: src={{ chroot_namec_d }}/m.example.int dest={{ local_files }}/m.example.int flat=yes
+  when: ask_m_example_int.user_input == 'replace'
+  ignore_errors: yes
+
+
+############################### p.example.ext  ###############
+
+- name: Check p example ext config
+  copy: src=p.example.ext dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_p_example_ext_check
+
+- name: Ask About p example ext config
+  pause:
+    prompt: "Изменить p.example.ext Зону ? Do You Want to Change p.example.ext config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_p_example_ext
+  when: copy_p_example_ext_check is changed
+
+- name: Copy p example ext config
+  copy: src=p.example.ext dest={{ chroot_namec_d }} mode=644
+  when: ask_p_example_ext.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace p example ext config to localhost
+  fetch: src={{ chroot_namec_d }}/p.example.ext dest={{ local_files }}/p.example.ext flat=yes
+  when: ask_p_example_ext.user_input == 'replace'
+  ignore_errors: yes
+
+############################### p.example.int  ###############
+
+- name: Check p example int config
+  copy: src=p.example.int dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_p_example_int_check
+
+- name: Ask About p example int config
+  pause:
+    prompt: "Изменить p.example.int Зону ? Do You Want to Change p.example.int config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_p_example_int
+  when: copy_p_example_int_check is changed
+
+- name: Copy p example int config
+  copy: src=p.example.int dest={{ chroot_namec_d }} mode=644
+  when: ask_p_example_int.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace p example int config to localhost
+  fetch: src={{ chroot_namec_d }}/p.example.int dest={{ local_files }}/p.example.int flat=yes
+  when: ask_p_example_int.user_input == 'replace'
+  ignore_errors: yes
+
+############################### pt.1.example.ext  ###############
+
+- name: Check pt 1 example ext config
+  copy: src=pt.1.example.ext dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_pt_1_example_ext_check
+
+- name: Ask About pt 1 example ext config
+  pause:
+    prompt: "Изменить pt.1.example.ext Зону ? Do You Want to Change pt.1.example.ext config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_pt_1_example_ext
+  when: copy_pt_1_example_ext_check is changed
+
+- name: Copy pt 1 example ext config
+  copy: src=pt.1.example.ext dest={{ chroot_namec_d }} mode=644
+  when: ask_pt_1_example_ext.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace pt 1 example ext config to localhost
+  fetch: src={{ chroot_namec_d }}/pt.1.example.ext dest={{ local_files }}/pt.1.example.ext flat=yes
+  when: ask_pt_1_example_ext.user_input == 'replace'
+  ignore_errors: yes
+
+############################### pt.1.example.int  ###############
+
+- name: Check pt 1 example int config
+  copy: src=pt.1.example.int dest={{ chroot_namec_d }} mode=644
+  check_mode: yes
+  register: copy_pt_1_example_int_check
+
+- name: Ask About pt 1 example int config
+  pause:
+    prompt: "Изменить pt.1.example.int Зону ? Do You Want to Change pt.1.example.int config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_pt_1_example_int
+  when: copy_pt_1_example_int_check is changed
+
+- name: Copy pt 1 example int config
+  copy: src=pt.1.example.int dest={{ chroot_namec_d }} mode=644
+  when: ask_pt_1_example_int.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace pt 1 example int config to localhost
+  fetch: src={{ chroot_namec_d }}/pt.1.example.int dest={{ local_files }}/pt.1.example.int flat=yes
+  when: ask_pt_1_example_int.user_input == 'replace'
+  ignore_errors: yes
+
+############################### Ssh ###############
+
+- name: Check Ssh Config
+  copy: src=ssh_config dest={{ ssh_d }} mode=644
+  check_mode: yes
+  register: copy_ssh_check
+
+- name: Ask About Ssh Config
+  pause:
+    prompt: "Изменить Конфиг Клиента Ssh? Do You Want to Change Ssh Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_ssh
+  when: copy_ssh_check is changed
+
+- name: Copy Ssh Config
+  copy: src=ssh_config dest={{ ssh_d }} mode=644
+  when: ask_ssh.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace Ssh Config to localhost
+  fetch: src={{ ssh_d }}/ssh_config dest={{ local_files }}/ssh_config flat=yes
+  when: ask_ssh.user_input == 'replace'
+  ignore_errors: yes
+
+####################### SSHD #####################
+
+- name: Check Sshd Config
+  copy: src=sshc_config dest={{ ssh_d }} mode=600
+  check_mode: yes
+  register: copy_sshc_check
+
+- name: Ask About Sshd Config
+  pause:
+    prompt: "Изменить Конфиг Сервера Ssh? Do You Want to Change Sshd Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_sshd
+  when: copy_sshc_check is changed
+
+- name: Copy Sshd Config
+  copy: src=sshc_config dest={{ ssh_d }} mode=600
+  when: ask_sshc.user_input == 'yes'
+  ignore_errors: yes
+
+  notify:
+   - Restart Sshd
+
+- name: Replace Sshd Config to localhost
+  fetch: src={{ ssh_d }}/sshc_config dest={{ local_files }}/sshc_config flat=yes
+  when: ask_sshc.user_input == 'replace'
+  ignore_errors: yes
+
+################################ Ntp ###########################
+
+- name: Check Ntp Config
+  copy: src=ntp.conf dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_ntp_check
+
+- name: Ask About Ntp Config
+  pause:
+    prompt: "Изменить Ntp Конфиг? Do You Want to Change Ntp Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_ntp
+  when: copy_ntp_check is changed
+
+- name: Copy Ntp Config
+  copy: src=ntp.conf dest={{ etc_d }} mode=644
+  when: ask_ntp.user_input == 'yes'
+  ignore_errors: yes
+
+  notify:
+    - Restart Ntp
+
+- name: Replace Ntp Config to localhost
+  fetch: src={{ etc_d }}/ntp.conf dest={{ local_files }}/ntp.conf flat=yes
+  when: ask_ntp.user_input == 'replace'
+  ignore_errors: yes
+
+####################### Resolv #################
+
+- name: Check Resolv Config
+  copy: src=resolv.conf dest={{ etc_d }} mode=664
+  check_mode: yes
+  register: copy_resolv_check
+
+- name: Ask About Resolv Config
+  pause:
+    prompt: "Изменить Конфигурацию Resolv? Do You Want to Change Resolv Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_resolv
+  when: copy_resolv_check is changed
+
+- name: Copy Resolv Config
+  copy: src=resolv.conf dest={{ etc_d }} mode=664
+  when: ask_resolv.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace Resolv Conf to localhost
+  fetch: src={{ etc_d }}/resolv.conf dest={{ local_files }}/resolv.conf flat=yes
+  when: ask_resolv.user_input == 'replace'
+  ignore_errors: yes
+
+########################### Hosts ####################
+
+- name: Check Hosts Config
+  copy: src=hosts dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_hosts_check
+
+- name: Ask About Hosts Config
+  pause:
+    prompt: "Изменить Конфиг Hosts? Do You Want to Change Hosts Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_hosts
+  when: copy_hosts_check is changed
+
+- name: Copy Hosts Config
+  copy: src=hosts dest={{ etc_d }} mode=644
+  when: ask_hosts.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace Hosts Conf to localhost
+  fetch: src={{ etc_d }}/hosts dest={{ local_files }}/hosts flat=yes
+  when: ask_hosts.user_input == 'replace'
+  ignore_errors: yes
+
+########################### Iptables ####################
+
+- name: Check Iptables config
+  copy: src=iptables dest={{ iptables_d }} mode=600
+  check_mode: yes
+  register: copy_iptables_check
+
+- name: Ask About Iptables config
+  pause:
+    prompt: "Изменить iptables config ? Do You Want to Change iptables config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_iptables
+  when: copy_iptables_check is changed
+
+- name: Copy Iptables config
+  copy: src=iptables dest={{ iptables_d }} mode=644
+  when: ask_iptables.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace Iptables config to localhost
+  fetch: src={{ iptables_d }}/iptables dest={{ local_files }}/iptables flat=yes
+  when: ask_iptables.user_input == 'replace'
+  ignore_errors: yes
+
+
+########################### Shadow ####################
+
+- name: Check shadow File
+  copy: src=shadow dest={{ etc_d }} mode=0000
+  check_mode: yes
+  register: copy_shadow_check
+
+- name: Ask About shadow File
+  pause:
+    prompt: "Изменить Файл shadow? Do You Want to Change shadow file? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_shadow
+  when: copy_shadow_check is changed
+
+- name: Copy shadow File
+  copy: src=shadow dest={{ etc_d }} mode=000
+  when: ask_shadow.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace shadow File to localhost
+  fetch: src={{ etc_d }}/shadow dest={{ local_files }}/shadow flat=yes
+  when: ask_shadow.user_input == 'replace'
+  ignore_errors: yes
+
+########################### Passwd ####################
+
+- name: Check passwd File
+  copy: src=passwd dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_passwc_check
+
+- name: Ask About passwd File
+  pause:
+    prompt: "Изменить Файл passwd? Do You Want to Change passwd file? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_passwd
+  when: copy_passwc_check is changed
+
+- name: Copy passwd File
+  copy: src=passwd dest={{ etc_d }} mode=644
+  when: ask_passwc.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace passwd File to localhost
+  fetch: src={{ etc_d }}/passwd dest={{ local_files }}/passwd flat=yes
+  when: ask_passwc.user_input == 'replace'
+  ignore_errors: yes
+
+########################### Group ####################
+
+- name: Check group File
+  copy: src=group dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_group_check
+
+- name: Ask About group File
+  pause:
+    prompt: "Изменить Файл group? Do You Want to Change group file? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_group
+  when: copy_group_check is changed
+
+- name: Copy group File
+  copy: src=group dest={{ etc_d }} mode=644
+  when: ask_group.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace group File to localhost
+  fetch: src={{ etc_d }}/group dest={{ local_files }}/group flat=yes
+  when: ask_group.user_input == 'replace'
+  ignore_errors: yes
+
+...

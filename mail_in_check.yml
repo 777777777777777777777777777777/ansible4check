@@ -1,0 +1,9 @@
+---
+- name: mail_in check
+  hosts: mail_in
+  become: yes
+
+  roles:
+     - mail_in_check
+...
+

@@ -1,0 +1,17 @@
+---
+# defaults file for proxy_check
+
+
+httpd_d: /etc/httpd/conf
+httpd_conf_d: /etc/httpd/conf.d
+
+ssh_d: /etc/ssh
+etc_d: /etc
+
+iptables_d: /etc/sysconfig
+
+web_http_files: /etc/ansible/roles/web_http/files
+web_http_log: /var/log/ansible/web_http.log
+
+...
+

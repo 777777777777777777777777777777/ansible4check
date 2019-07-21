@@ -1,0 +1,13 @@
+---
+# defaults file for proxy
+squid_d: /etc/squid
+ssh_d: /etc/ssh
+etc_d: /etc
+
+iptables_d: /etc/sysconfig
+
+local_files: /etc/ansible/roles/proxy/files
+
+...
+
+

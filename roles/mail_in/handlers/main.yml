@@ -1,0 +1,22 @@
+---
+# handlers file for mail_in
+
+- name: Restart Clamd
+  service: name=clamd state=restarted
+
+- name: Restart Postfix
+  service: name=postfix state=restarted
+
+- name: Restart Httpd
+  service: name=httpd state=restarted
+
+- name: Restart Sshd
+  service: name=sshd state=restarted
+
+- name: Restart Ntp
+  service: name=ntpd state=restarted
+
+...
+
+
+

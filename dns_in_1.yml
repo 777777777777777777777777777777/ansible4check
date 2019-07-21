@@ -1,0 +1,9 @@
+---
+- name: dns_in_1 copy config
+  hosts: dns_in_master
+  become: yes
+
+  roles:
+     - dns_in_1
+...
+

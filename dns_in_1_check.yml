@@ -1,0 +1,8 @@
+---
+- name: dns_in_1 check config
+  hosts: dns_in_master
+  become: yes
+
+  roles:
+     - dns_in_1_check
+...

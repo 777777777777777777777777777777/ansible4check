@@ -1,0 +1,733 @@
+---
+# tasks file for dns_out_1_dmz_check
+
+############################### named.conf  ###############
+
+- name: Check Named Conf
+  copy: src={{ dns_out_1_dmz_files }}/named.conf dest={{ chroot_etc_d }} mode=644
+  check_mode: yes
+  register: copy_named_check
+
+- name: Remove Named conf key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger named conf has changed' replace='named conf has changed'
+  delegate_to: localhost
+  when: copy_named_check is succeeded
+
+- name: Retrieving named conf Stat Data
+  stat: path={{ chroot_etc_d }}/named.conf
+  register: named_status
+  when: copy_named_check is changed
+
+- name: Insert named Line a Log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger named conf has changed at {{ named_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_named_check is changed
+
+########################### 0.0.1.0 ######################
+
+- name: Check 0 0 1 0 Zone
+  copy: src={{ dns_out_1_dmz_files }}/0.0.1.0 dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_1_check
+
+- name: Remove 0 0 1 0 key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger 0.0.1.0 Zone has changed' replace='0.0.1.0 Zone has changed'
+  delegate_to: localhost
+  when: copy_1_check is succeeded
+
+- name: Retrieving 0 0 1 0 file stat data
+  stat: path={{ chroot_named_d }}/0.0.1.0
+  register: 1_status
+  when: copy_1_check is changed
+
+- name: Insert 0 0 1 0 line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger 0.0.1.0 Zone has changed at {{ 1_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_1_check is changed
+
+########################### 0.0.2.0 ######################
+
+- name: Check 0 0 2 0 Zone
+  copy: src={{ dns_out_1_dmz_files }}/0.0.2.0 dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_2_check
+
+- name: Remove 0 0 2 0 key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger 0.0.2.0 Zone has changed' replace='0.0.2.0 Zone has changed'
+  delegate_to: localhost
+  when: copy_2_check is succeeded
+
+- name: Retrieving 0 0 2 0 file stat data
+  stat: path={{ chroot_named_d }}/0.0.2.0
+  register: 2_status
+  when: copy_2_check is changed
+
+- name: Insert 0 0 2 0 line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger 0.0.2.0 Zone has changed at {{ 2_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_2_check is changed
+
+########################### 0.0.3.0 ######################
+
+- name: Check 0 0 3 0 Zone
+  copy: src={{ dns_out_1_dmz_files }}/0.0.3.0 dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_3_check
+
+- name: Remove 0 0 3 0 key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger 0.0.3.0 Zone has changed' replace='0.0.3.0 Zone has changed'
+  delegate_to: localhost
+  when: copy_3_check is succeeded
+
+- name: Retrieving 0 0 3 0 file stat data
+  stat: path={{ chroot_named_d }}/0.0.3.0
+  register: 3_status
+  when: copy_3_check is changed
+
+- name: Insert 0 0 3 0 line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger 0.0.3.0 Zone has changed at {{ 3_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_3_check is changed
+
+########################### 0.0.4.0 ######################
+
+- name: Check 0 0 4 0 Zone
+  copy: src={{ dns_out_1_dmz_files }}/0.0.4.0 dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_4_check
+
+- name: Remove 0 0 4 0 key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger 0.0.4.0 Zone has changed' replace='0.0.4.0 Zone has changed'
+  delegate_to: localhost
+  when: copy_4_check is succeeded
+
+- name: Retrieving 0 0 4 0 file stat data
+  stat: path={{ chroot_named_d }}/0.0.4.0
+  register: 4_status
+  when: copy_4_check is changed
+
+- name: Insert 0 0 4 0 line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger 0.0.4.0 Zone has changed at {{ 4_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_4_check is changed  
+########################### a.example.ext ######################
+
+- name: Check a example ext Zone
+  copy: src={{ dns_out_1_dmz_files }}/a.example.ext dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_a_example_ext_check
+
+- name: Remove a example ext key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger a.example.ext Zone has changed' replace='a.example.ext Zone has changed'
+  delegate_to: localhost
+  when: copy_a_example_ext_check is succeeded
+
+- name: Retrieving a example ext file stat data
+  stat: path={{ chroot_named_d }}/a.example.ext
+  register: a_example_ext_status
+  when: copy_a_example_ext_check is changed
+
+- name: Insert a example ext line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger a.example.ext Zone has changed at {{ a_example_ext_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_a_example_ext_check is changed
+########################### a.example.int ######################
+
+- name: Check a example int Zone
+  copy: src={{ dns_out_1_dmz_files }}/a.example.int dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_a_example_int_check
+
+- name: Remove a example int key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger a.example.int Zone has changed' replace='a.example.int Zone has changed'
+  delegate_to: localhost
+  when: copy_a_example_int_check is succeeded
+
+- name: Retrieving a example int file stat data
+  stat: path={{ chroot_named_d }}/a.example.int
+  register: a_example_int_status
+  when: copy_a_example_int_check is changed
+
+- name: Insert a example int line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger a.example.int Zone has changed at {{ a_example_int_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_a_example_int_check is changed
+########################### b.a.example.ext ######################
+
+- name: Check b a example ext Zone
+  copy: src={{ dns_out_1_dmz_files }}/b.a.example.ext dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_b_a_example_ext_check
+
+- name: Remove b a example ext key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger b.a.example.ext Zone has changed' replace='b.a.example.ext Zone has changed'
+  delegate_to: localhost
+  when: copy_b_a_example_ext_check is succeeded
+
+- name: Retrieving b a example ext file stat data
+  stat: path={{ chroot_named_d }}/b.a.example.ext
+  register: b_a_example_ext_status
+  when: copy_b_a_example_ext_check is changed
+
+- name: Insert b a example ext line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger b.a.example.ext Zone has changed at {{ b_a_example_ext_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_b_a_example_ext_check is changed  
+
+########################### b.a.example.int ######################
+
+- name: Check b a example int Zone
+  copy: src={{ dns_out_1_dmz_files }}/b.a.example.int dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_b_a_example_int_check
+
+- name: Remove b a example int key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger b.a.example.int Zone has changed' replace='b.a.example.int Zone has changed'
+  delegate_to: localhost
+  when: copy_b_a_example_int_check is succeeded
+
+- name: Retrieving b a example int file stat data
+  stat: path={{ chroot_named_d }}/b.a.example.int
+  register: b_a_example_int_status
+  when: copy_b_a_example_int_check is changed
+
+- name: Insert b a example int line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger b.a.example.int Zone has changed at {{ b_a_example_int_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_b_a_example_int_check is changed
+########################### c.1.example.ext ######################
+
+- name: Check c 1 example ext Zone
+  copy: src={{ dns_out_1_dmz_files }}/c.1.example.ext dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_c_1_example_ext_check
+
+- name: Remove c 1 example ext key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger c.1.example.ext Zone has changed' replace='c.1.example.ext Zone has changed'
+  delegate_to: localhost
+  when: copy_c_1_example_ext_check is succeeded
+
+- name: Retrieving c 1 example ext file stat data
+  stat: path={{ chroot_named_d }}/c.1.example.ext
+  register: c_1_example_ext_status
+  when: copy_c_1_example_ext_check is changed
+
+- name: Insert c 1 example ext line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger c.1.example.ext Zone has changed at {{ c_1_example_ext_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_c_1_example_ext_check is changed
+########################### c.1.example.int ######################
+
+- name: Check c 1 example int Zone
+  copy: src={{ dns_out_1_dmz_files }}/c.1.example.int dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_c_1_example_int_check
+
+- name: Remove c 1 example int key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger c.1.example.int Zone has changed' replace='c.1.example.int Zone has changed'
+  delegate_to: localhost
+  when: copy_c_1_example_int_check is succeeded
+
+- name: Retrieving c 1 example int file stat data
+  stat: path={{ chroot_named_d }}/c.1.example.int
+  register: c_1_example_int_status
+  when: copy_c_1_example_int_check is changed
+
+- name: Insert c 1 example int line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger c.1.example.int Zone has changed at {{ c_1_example_int_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_c_1_example_int_check is changed
+########################### d.1.example.ext ######################
+
+- name: Check d 1 example ext Zone
+  copy: src={{ dns_out_1_dmz_files }}/d.1.example.ext dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_d_1_example_ext_check
+
+- name: Remove d 1 example ext key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger d.1.example.ext Zone has changed' replace='d.1.example.ext Zone has changed'
+  delegate_to: localhost
+  when: copy_d_1_example_ext_check is succeeded
+
+- name: Retrieving d 1 example ext file stat data
+  stat: path={{ chroot_named_d }}/d.1.example.ext
+  register: d_1_example_ext_status
+  when: copy_d_1_example_ext_check is changed
+
+- name: Insert d 1 example ext line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger d.1.example.ext Zone has changed at {{ d_1_example_ext_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_d_1_example_ext_check is changed
+########################### d.1.example.int ######################
+
+- name: Check d 1 example int Zone
+  copy: src={{ dns_out_1_dmz_files }}/d.1.example.int dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_d_1_example_int_check
+
+- name: Remove d 1 example int key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger d.1.example.int Zone has changed' replace='d.1.example.int Zone has changed'
+  delegate_to: localhost
+  when: copy_d_1_example_int_check is succeeded
+
+- name: Retrieving d 1 example int file stat data
+  stat: path={{ chroot_named_d }}/d.1.example.int
+  register: d_1_example_int_status
+  when: copy_d_1_example_int_check is changed
+
+- name: Insert d 1 example int line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger d.1.example.int Zone has changed at {{ d_1_example_int_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_d_1_example_int_check is changed
+########################### h.a.example.ext ######################
+
+- name: Check h a example ext Zone
+  copy: src={{ dns_out_1_dmz_files }}/h.a.example.ext dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_h_a_example_ext_check
+
+- name: Remove h a example ext key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger h.a.example.ext Zone has changed' replace='h.a.example.ext Zone has changed'
+  delegate_to: localhost
+  when: copy_h_a_example_ext_check is succeeded
+
+- name: Retrieving h a example ext file stat data
+  stat: path={{ chroot_named_d }}/h.a.example.ext
+  register: h_a_example_ext_status
+  when: copy_h_a_example_ext_check is changed
+
+- name: Insert h a example ext line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger h.a.example.ext Zone has changed at {{ h_a_example_ext_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_h_a_example_ext_check is changed
+########################### h.a.example.int ######################
+
+- name: Check h a example int Zone
+  copy: src={{ dns_out_1_dmz_files }}/h.a.example.int dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_h_a_example_int_check
+
+- name: Remove h a example int key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger h.a.example.int Zone has changed' replace='h.a.example.int Zone has changed'
+  delegate_to: localhost
+  when: copy_h_a_example_int_check is succeeded
+
+- name: Retrieving h a example int file stat data
+  stat: path={{ chroot_named_d }}/h.a.example.int
+  register: h_a_example_int_status
+  when: copy_h_a_example_int_check is changed
+
+- name: Insert h a example int line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger h.a.example.int Zone has changed at {{ h_a_example_int_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_h_a_example_int_check is changed
+########################### h.int ######################
+
+- name: Check h int Zone
+  copy: src={{ dns_out_1_dmz_files }}/h.int dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_h_int_check
+
+- name: Remove h int key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger h.int Zone has changed' replace='h.int Zone has changed'
+  delegate_to: localhost
+  when: copy_h_int_check is succeeded
+
+- name: Retrieving h int file stat data
+  stat: path={{ chroot_named_d }}/h.int
+  register: h_int_status
+  when: copy_h_int_check is changed
+
+- name: Insert h int line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger h.int Zone has changed at {{ h_int_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_h_int_check is changed
+########################### 1.example.ext ######################
+
+- name: Check 1 example ext Zone
+  copy: src={{ dns_out_1_dmz_files }}/1.example.ext dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_1_example_ext_check
+
+- name: Remove 1 example ext key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger 1.example.ext Zone has changed' replace='1.example.ext Zone has changed'
+  delegate_to: localhost
+  when: copy_1_example_ext_check is succeeded
+
+- name: Retrieving 1 example ext file stat data
+  stat: path={{ chroot_named_d }}/1.example.ext
+  register: 1_example_ext_status
+  when: copy_1_example_ext_check is changed
+
+- name: Insert 1 example ext line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger 1.example.ext Zone has changed at {{ 1_example_ext_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_1_example_ext_check is changed
+########################### 1.example.int ######################
+
+- name: Check 1 example int Zone
+  copy: src={{ dns_out_1_dmz_files }}/1.example.int dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_1_example_int_check
+
+- name: Remove 1 example int key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger 1.example.int Zone has changed' replace='1.example.int Zone has changed'
+  delegate_to: localhost
+  when: copy_1_example_int_check is succeeded
+
+- name: Retrieving 1 example int file stat data
+  stat: path={{ chroot_named_d }}/1.example.int
+  register: 1_example_int_status
+  when: copy_1_example_int_check is changed
+
+- name: Insert 1 example int line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger 1.example.int Zone has changed at {{ 1_example_int_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_1_example_int_check is changed
+########################### 1.example.int.org ######################
+
+- name: Check 1 example int org Zone
+  copy: src={{ dns_out_1_dmz_files }}/1.example.int.org dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_1_example_int_org_check
+
+- name: Remove 1 example int org key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger 1.example.int.org Zone has changed' replace='1.example.int.org Zone has changed'
+  delegate_to: localhost
+  when: copy_1_example_int_org_check is succeeded
+
+- name: Retrieving 1 example int org file stat data
+  stat: path={{ chroot_named_d }}/1.example.int.org
+  register: 1_example_int_org_status
+  when: copy_1_example_int_org_check is changed
+
+- name: Insert 1 example int org line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger 1.example.int.org Zone has changed at {{ 1_example_int_org_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_1_example_int_org_check is changed
+########################### m.example.ext ######################
+
+- name: Check m example ext Zone
+  copy: src={{ dns_out_1_dmz_files }}/m.example.ext dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_m_example_ext_check
+
+- name: Remove m example ext key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger m.example.ext Zone has changed' replace='m.example.ext Zone has changed'
+  delegate_to: localhost
+  when: copy_m_example_ext_check is succeeded
+
+- name: Retrieving m example ext file stat data
+  stat: path={{ chroot_named_d }}/m.example.ext
+  register: m_example_ext_status
+  when: copy_m_example_ext_check is changed
+
+- name: Insert m example ext line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger m.example.ext Zone has changed at {{ m_example_ext_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_m_example_ext_check is changed
+########################### m.example.int ######################
+
+- name: Check m example int Zone
+  copy: src={{ dns_out_1_dmz_files }}/m.example.int dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_m_example_int_check
+
+- name: Remove m example int key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger m.example.int Zone has changed' replace='m.example.int Zone has changed'
+  delegate_to: localhost
+  when: copy_m_example_int_check is succeeded
+
+- name: Retrieving m example int file stat data
+  stat: path={{ chroot_named_d }}/m.example.int
+  register: m_example_int_status
+  when: copy_m_example_int_check is changed
+
+- name: Insert m example int line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger m.example.int Zone has changed at {{ m_example_int_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_m_example_int_check is changed
+########################### p.example.ext ######################
+
+- name: Check p example ext Zone
+  copy: src={{ dns_out_1_dmz_files }}/p.example.ext dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_p_example_ext_check
+
+- name: Remove p example ext key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger p.example.ext Zone has changed' replace='p.example.ext Zone has changed'
+  delegate_to: localhost
+  when: copy_p_example_ext_check is succeeded
+
+- name: Retrieving p example ext file stat data
+  stat: path={{ chroot_named_d }}/p.example.ext
+  register: p_example_ext_status
+  when: copy_p_example_ext_check is changed
+
+- name: Insert p example ext line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger p.example.ext Zone has changed at {{ p_example_ext_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_p_example_ext_check is changed
+########################### p.example.int ######################
+
+- name: Check p example int Zone
+  copy: src={{ dns_out_1_dmz_files }}/p.example.int dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_p_example_int_check
+
+- name: Remove p example int key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger p.example.int Zone has changed' replace='p.example.int Zone has changed'
+  delegate_to: localhost
+  when: copy_p_example_int_check is succeeded
+
+- name: Retrieving p example int file stat data
+  stat: path={{ chroot_named_d }}/p.example.int
+  register: p_example_int_status
+  when: copy_p_example_int_check is changed
+
+- name: Insert p example int line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger p.example.int Zone has changed at {{ p_example_int_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_p_example_int_check is changed
+########################### pt.1.example.ext ######################
+
+- name: Check pt 1 example ext Zone
+  copy: src={{ dns_out_1_dmz_files }}/pt.1.example.ext dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_pt_1_example_ext_check
+
+- name: Remove pt 1 example ext key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger pt.1.example.ext Zone has changed' replace='pt.1.example.ext Zone has changed'
+  delegate_to: localhost
+  when: copy_pt_1_example_ext_check is succeeded
+
+- name: Retrieving pt 1 example ext file stat data
+  stat: path={{ chroot_named_d }}/pt.1.example.ext
+  register: pt_1_example_ext_status
+  when: copy_pt_1_example_ext_check is changed
+
+- name: Insert pt 1 example ext line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger pt.1.example.ext Zone has changed at {{ pt_1_example_ext_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_pt_1_example_ext_check is changed
+########################### pt.1.example.int ######################
+
+- name: Check pt 1 example int Zone
+  copy: src={{ dns_out_1_dmz_files }}/pt.1.example.int dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_pt_1_example_int_check
+
+- name: Remove pt 1 example int key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger pt.1.example.int Zone has changed' replace='pt.1.example.int Zone has changed'
+  delegate_to: localhost
+  when: copy_pt_1_example_int_check is succeeded
+
+- name: Retrieving pt 1 example int file stat data
+  stat: path={{ chroot_named_d }}/pt.1.example.int
+  register: pt_1_example_int_status
+  when: copy_pt_1_example_int_check is changed
+
+- name: Insert pt 1 example int line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger pt.1.example.int Zone has changed at {{ pt_1_example_int_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_pt_1_example_int_check is changed
+  
+########################### SSH ######################
+
+- name: Check Ssh Config
+  copy: src={{ dns_out_1_dmz_files }}/ssh_config dest={{ ssh_d }} mode=644
+  check_mode: yes
+  register: copy_ssh_check
+
+- name: Remove Ssh key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger ssh config has changed' replace='ssh config has changed'
+  delegate_to: localhost
+  when: copy_ssh_check is succeeded
+
+- name: Retrieving Ssh file stat data
+  stat: path={{ ssh_d }}/ssh_config
+  register: ssh_status
+  when: copy_ssh_check is changed
+
+- name: Insert Ssh line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger ssh config has changed at {{ ssh_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_ssh_check is changed
+
+######################## SSHD ######################
+
+- name: Check Sshd Config
+  copy: src={{ dns_out_1_dmz_files }}/sshd_config dest={{ ssh_d }} mode=600
+  check_mode: yes
+  register: copy_sshd_check
+
+- name: Remove Sshd key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger sshd config has changed' replace='sshd config has changed'
+  delegate_to: localhost
+  when: copy_sshd_check is succeeded
+
+- name: Retrieving Sshd file stat data
+  stat: path={{ ssh_d }}/sshd_config
+  register: sshd_status
+  when: copy_sshd_check is changed
+
+- name: Insert Sshd line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger sshd config has changed at {{ sshd_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_sshd_check is changed
+  
+################################ Ntp ###########################
+
+- name: Check Ntp Config
+  copy: src={{ dns_out_1_dmz_files }}/ntp.conf dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_ntp_check
+
+- name: Remove Ntp key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger ntp conf has changed' replace='ntp conf has changed'
+  delegate_to: localhost
+  when: copy_ntp_check is succeeded
+
+- name: Retrieving ntp file stat data
+  stat: path={{ etc_d }}/ntp.conf
+  register: ntp_status
+  when: copy_ntp_check is changed
+
+- name: Insert Ntp line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger ntp conf has changed at {{ ntp_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_ntp_check is changed
+
+####################### Resolv #################
+
+- name: Check Resolv Config
+  copy: src={{ dns_out_1_dmz_files }}/resolv.conf dest={{ etc_d }} mode=664
+  check_mode: yes
+  register: copy_resolv_check
+
+- name: Remove resolv key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger resolv conf has changed' replace='resolv conf has changed'
+  delegate_to: localhost
+  when: copy_resolv_check is succeeded
+
+- name: Retrieving resolv file stat data
+  stat: path={{ etc_d }}/resolv.conf
+  register: resolv_status
+  when: copy_resolv_check is changed
+
+- name: Insert resolv line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger resolv conf has changed at {{ resolv_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_resolv_check is changed
+
+########################### Hosts ####################
+
+- name: Check Hosts Config
+  copy: src={{ dns_out_1_dmz_files }}/hosts dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_hosts_check
+
+- name: Remove Hosts key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger hosts file has changed' replace='hosts file has changed'
+  delegate_to: localhost
+  when: copy_hosts_check is succeeded
+
+- name: Retrieving hosts file stat data
+  stat: path={{ etc_d }}/hosts
+  register: hosts_status
+  when: copy_hosts_check is changed
+
+- name: Insert hosts check line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger hosts file has changed at {{ hosts_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_hosts_check is changed
+########################### Iptables ####################
+
+- name: Check Iptables Config
+  copy: src={{ dns_out_1_dmz_files }}/iptables dest={{ iptables_d }} mode=600
+  check_mode: yes
+  register: copy_iptables_check
+
+- name: Remove Iptables key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger iptables config has changed' replace='iptables config has changed'
+  delegate_to: localhost
+  when: copy_iptables_check is succeeded
+
+- name: Retrieving Iptables config stat data
+  stat: path={{ iptables_d }}/iptables
+  register: iptables_status
+  when: copy_iptables_check is changed
+
+- name: Insert Iptables check line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger iptables config has changed at {{ iptables_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_iptables_check is changed
+
+########################### shadow ####################
+
+- name: Check shadow file
+  copy: src={{ dns_out_1_dmz_files }}/shadow dest={{ etc_d }} mode=0000
+  check_mode: yes
+  register: copy_shadow_check
+
+- name: Remove shadow key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger shadow file has changed' replace='shadow file has changed'
+  delegate_to: localhost
+  when: copy_shadow_check is succeeded
+
+- name: Retrieving shadow file stat data
+  stat: path={{ etc_d }}/shadow
+  register: shadow_status
+  when: copy_shadow_check is changed
+
+- name: Insert shadow check line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger shadow file has changed at {{ shadow_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_shadow_check is changed
+
+########################### passwd ####################
+
+- name: Check passwd file
+  copy: src={{ dns_out_1_dmz_files }}/passwd dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_passwd_check
+
+- name: Remove passwd key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger passwd file has changed' replace='passwd file has changed'
+  delegate_to: localhost
+  when: copy_passwd_check is succeeded
+
+- name: Retrieving passwd file stat data
+  stat: path={{ etc_d }}/passwd
+  register: passwd_status
+  when: copy_passwd_check is changed
+
+- name: Insert passwd check line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger passwd file has changed at {{ shadow_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_passwd_check is changed
+
+########################### group ####################
+
+- name: Check group file
+  copy: src={{ dns_out_1_dmz_files }}/group dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_group_check
+
+- name: Remove group key word a log file
+  replace: dest={{ dns_out_1_dmz_log }} regexp='trigger group file has changed' replace='group file has changed'
+  delegate_to: localhost
+  when: copy_group_check is succeeded
+
+- name: Retrieving group file stat data
+  stat: path={{ etc_d }}/group
+  register: group_status
+  when: copy_group_check is changed
+
+- name: Insert group check line a log file
+  lineinfile: dest={{ dns_out_1_dmz_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger group file has changed at {{ shadow_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_group_check is changed
+
+...
+  

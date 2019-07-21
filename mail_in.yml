@@ -1,0 +1,10 @@
+---
+- name: mail_in copy config
+  hosts: mail_in
+  become: yes
+
+  roles:
+     - mail_in
+...
+
+ 

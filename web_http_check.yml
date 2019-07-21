@@ -1,0 +1,9 @@
+---
+- name: web_http check
+  hosts: web_http
+  become: yes
+
+  roles:
+     - web_http_check
+...
+

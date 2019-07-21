@@ -1,0 +1,9 @@
+---
+- name: dns_out_2 check config
+  hosts: dns_out_2
+  become: yes
+
+  roles:
+     - dns_out_2_check
+...
+

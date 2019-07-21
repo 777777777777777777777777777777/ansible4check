@@ -1,0 +1,301 @@
+---
+# tasks file for dns_out_1_dmz
+
+############################### NAMED CONF  ###############
+
+- name: Check Named Conf
+  copy: src=named.conf dest={{ chroot_etc_d }} mode=644
+  check_mode: yes
+  register: copy_named_check
+
+- name: Ask About Named Conf
+  pause:
+    prompt: "Изменить named conf ? Do You Want to Change named conf? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_named
+  when: copy_named_check is changed
+
+- name: Copy Named Conf
+  copy: src=named.conf dest={{ chroot_etc_d }} mode=644
+  when: ask_named.user_input == 'yes'
+  ignore_errors: yes
+
+  notify:
+   - Restart Named
+
+- name: Replace Named Conf to localhost
+  fetch: src={{ chroot_etc_d }}/named.conf dest={{ local_files }}/named.conf flat=yes
+  when: ask_named.user_input == 'replace'
+  ignore_errors: yes
+
+############################### 172.0.1.0  ###############
+
+- name: Check 172 0 1 0 config
+  copy: src=172.0.1.0 dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_0_1_check
+
+- name: Ask About 172 0 1 0 config
+  pause:
+    prompt: "Изменить 172.0.1.0 Зону ? Do You Want to Change 172.0.1.0 config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_0_1
+  when: copy_0_1_check is changed
+
+- name: Copy 172 0 1 0 config
+  copy: src=172.0.1.0 dest={{ chroot_named_d }} mode=644
+  when: ask_0_1.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace 172 0 1 0 config to localhost
+  fetch: src={{ chroot_named_d }}/172.0.1.0 dest={{ local_files }}/172.0.1.0 flat=yes
+  when: ask_0_1.user_input == 'replace'
+  ignore_errors: yes
+
+############################### 172.0.2.0  ###############
+
+- name: Check 172 0 2 0 config
+  copy: src=172.0.2.0 dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_0_2_check
+
+- name: Ask About 172 0 2 0 config
+  pause:
+    prompt: "Изменить 172.0.2.0 Зону ? Do You Want to Change 172.0.2.0 config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_0_2
+  when: copy_0_2_check is changed
+
+- name: Copy 172 0 2 0 config
+  copy: src=172.0.2.0 dest={{ chroot_named_d }} mode=644
+  when: ask_0_2.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace 172 0 2 0 config to localhost
+  fetch: src={{ chroot_named_d }}/172.0.2.0 dest={{ local_files }}/172.0.2.0 flat=yes
+  when: ask_0_2.user_input == 'replace'
+  ignore_errors: yes
+
+############################### 172.0.3.0  ###############
+
+- name: Check 172 0 3 0 config
+  copy: src=172.0.3.0 dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_0_3_check
+
+- name: Ask About 172 0 3 0 config
+  pause:
+    prompt: "Изменить 172.0.3.0 Зону ? Do You Want to Change 172.0.3.0 config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_0_3
+  when: copy_0_3_check is changed
+
+- name: Copy 172 0 3 0 config
+  copy: src=172.0.3.0 dest={{ chroot_named_d }} mode=644
+  when: ask_0_3.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace 172 0 3 0 config to localhost
+  fetch: src={{ chroot_named_d }}/172.0.3.0 dest={{ local_files }}/172.0.3.0 flat=yes
+  when: ask_0_3.user_input == 'replace'
+  ignore_errors: yes
+
+############################### 172.0.4.0  ###############
+
+- name: Check 172 0 4 0 config
+  copy: src=172.0.4.0 dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_0_4_check
+
+- name: Ask About 172 0 4 0 config
+  pause:
+    prompt: "Изменить 172.0.4.0 Зону ? Do You Want to Change 172.0.4.0 config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_0_4
+  when: copy_0_4_check is changed
+
+- name: Copy 172 0 4 0 config
+  copy: src=172.0.4.0 dest={{ chroot_named_d }} mode=644
+  when: ask_0_4.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace 172 0 4 0 config to localhost
+  fetch: src={{ chroot_named_d }}/172.0.4.0 dest={{ local_files }}/172.0.4.0 flat=yes
+  when: ask_0_4.user_input == 'replace'
+  ignore_errors: yes
+
+############################### h-dmz  ###############
+
+- name: Check h dmz config
+  copy: src=h-dmz dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_h_dmz_check
+
+- name: Ask About h dmz config
+  pause:
+    prompt: "Изменить h-dmz Зону ? Do You Want to Change h-dmz config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_h_dmz
+  when: copy_h_dmz_check is changed
+
+- name: Copy h dmz config
+  copy: src=h-dmz dest={{ chroot_named_d }} mode=644
+  when: ask_h_dmz.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace h dmz config to localhost
+  fetch: src={{ chroot_named_d }}/h-dmz dest={{ local_files }}/h-dmz flat=yes
+  when: ask_h_dmz.user_input == 'replace'
+  ignore_errors: yes
+
+############################### Ssh ###############
+
+- name: Check Ssh Config
+  copy: src=ssh_config dest={{ ssh_d }} mode=644
+  check_mode: yes
+  register: copy_ssh_check
+
+- name: Ask About Ssh Config
+  pause:
+    prompt: "Изменить Конфиг Клиента Ssh? Do You Want to Change Ssh Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_ssh
+  when: copy_ssh_check is changed
+
+- name: Copy Ssh Config
+  copy: src=ssh_config dest={{ ssh_d }} mode=644
+  when: ask_ssh.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace Ssh Config to localhost
+  fetch: src={{ ssh_d }}/ssh_config dest={{ local_files }}/ssh_config flat=yes
+  when: ask_ssh.user_input == 'replace'
+  ignore_errors: yes
+
+####################### SSHD #####################
+
+- name: Check Sshd Config
+  copy: src=sshd_config dest={{ ssh_d }} mode=600
+  check_mode: yes
+  register: copy_sshd_check
+
+- name: Ask About Sshd Config
+  pause:
+    prompt: "Изменить Конфиг Сервера Ssh? Do You Want to Change Sshd Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_sshd
+  when: copy_sshd_check is changed
+
+- name: Copy Sshd Config
+  copy: src=sshd_config dest={{ ssh_d }} mode=600
+  when: ask_sshd.user_input == 'yes'
+  ignore_errors: yes
+
+  notify:
+   - Restart Sshd
+
+- name: Replace Sshd Config to localhost
+  fetch: src={{ ssh_d }}/sshd_config dest={{ local_files }}/sshd_config flat=yes
+  when: ask_sshd.user_input == 'replace'
+  ignore_errors: yes
+
+################################ Ntp ###########################
+
+- name: Check Ntp Config
+  copy: src=ntp.conf dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_ntp_check
+
+- name: Ask About Ntp Config
+  pause:
+    prompt: "Изменить Ntp Конфиг? Do You Want to Change Ntp Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_ntp
+  when: copy_ntp_check is changed
+
+- name: Copy Ntp Config
+  copy: src=ntp.conf dest={{ etc_d }} mode=644
+  when: ask_ntp.user_input == 'yes'
+  ignore_errors: yes
+
+  notify:
+    - Restart Ntp
+
+- name: Replace Ntp Config to localhost
+  fetch: src={{ etc_d }}/ntp.conf dest={{ local_files }}/ntp.conf flat=yes
+  when: ask_ntp.user_input == 'replace'
+  ignore_errors: yes
+
+####################### Resolv #################
+
+- name: Check Resolv Config
+  copy: src=resolv.conf dest={{ etc_d }} mode=664
+  check_mode: yes
+  register: copy_resolv_check
+
+- name: Ask About Resolv Config
+  pause:
+    prompt: "Изменить Конфигурацию Resolv? Do You Want to Change Resolv Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_resolv
+  when: copy_resolv_check is changed
+
+- name: Copy Resolv Config
+  copy: src=resolv.conf dest={{ etc_d }} mode=664
+  when: ask_resolv.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace Resolv Conf to localhost
+  fetch: src={{ etc_d }}/resolv.conf dest={{ local_files }}/resolv.conf flat=yes
+  when: ask_resolv.user_input == 'replace'
+  ignore_errors: yes
+
+########################### Hosts ####################
+
+- name: Check Hosts Config
+  copy: src=hosts dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_hosts_check
+
+- name: Ask About Hosts Config
+  pause:
+    prompt: "Изменить Конфиг Hosts? Do You Want to Change Hosts Config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_hosts
+  when: copy_hosts_check is changed
+
+- name: Copy Hosts Config
+  copy: src=hosts dest={{ etc_d }} mode=644
+  when: ask_hosts.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace Hosts Conf to localhost
+  fetch: src={{ etc_d }}/hosts dest={{ local_files }}/hosts flat=yes
+  when: ask_hosts.user_input == 'replace'
+  ignore_errors: yes
+
+########################### Iptables ####################
+
+- name: Check Iptables config
+  copy: src=iptables dest={{ iptables_d }} mode=600
+  check_mode: yes
+  register: copy_iptables_check
+
+- name: Ask About Iptables config
+  pause:
+    prompt: "Изменить iptables config ? Do You Want to Change iptables config? (yes/no/replace)"
+  delegate_to: localhost
+  register: ask_iptables
+  when: copy_iptables_check is changed
+
+- name: Copy Iptables config
+  copy: src=iptables dest={{ iptables_d }} mode=644
+  when: ask_iptables.user_input == 'yes'
+  ignore_errors: yes
+
+- name: Replace Iptables config to localhost
+  fetch: src={{ iptables_d }}/iptables dest={{ local_files }}/iptables flat=yes
+  when: ask_iptables.user_input == 'replace'
+  ignore_errors: yes
+
+...

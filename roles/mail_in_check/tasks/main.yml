@@ -1,0 +1,363 @@
+---
+# tasks file for mail_in_check
+
+############################### Postfix main.cf  ###############
+
+- name: Check main cf
+  copy: src={{ mail_in_files }}/main.cf dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_main_cf_check
+
+- name: Remove main cf key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger postfix main.cf has changed' replace='postfix main.cf has changed'
+  delegate_to: localhost
+  when: copy_main_cf_check is succeeded
+
+- name: Retrieving main cf Stat Data
+  stat: path={{ postfix_d }}/main.cf
+  register: main_cf_status
+  when: copy_main_cf_check is changed
+
+- name: Insert main cf Line a Log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger postfix main.cf has changed at {{ main_cf_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_main_cf_check is changed
+
+############################### Postfix blacklist  ###############
+
+- name: Check blacklist file
+  copy: src={{ mail_in_files }}/blacklist dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_blacklist_check
+
+- name: Remove blacklist file key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger postfix blacklist has changed' replace='postfix blacklist has changed'
+  delegate_to: localhost
+  when: copy_blacklist_check is succeeded
+
+- name: Retrieving blacklist file Stat Data
+  stat: path={{ postfix_d }}/blacklist
+  register: blacklist_status
+  when: copy_blacklist_check is changed
+
+- name: Insert blacklist file Line a Log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger postfix blacklist has changed at {{ main_cf_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_blacklist_check is changed
+
+
+############################### Postfix postgrey_whitelist_clients  ###############
+
+- name: Check postgrey_whitelist_clients file
+  copy: src={{ mail_in_files }}/postgrey_whitelist_clients dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_postgrey_whitelist_clients_check
+
+- name: Remove postgrey_whitelist_clients file key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger postfix postgrey_whitelist_clients has changed' replace='postfix postgrey_whitelist_clients has changed'
+  delegate_to: localhost
+  when: copy_postgrey_whitelist_clients_check is succeeded
+
+- name: Retrieving postgrey_whitelist_clients file Stat Data
+  stat: path={{ postfix_d }}/postgrey_whitelist_clients
+  register: postgrey_whitelist_clients_status
+  when: copy_postgrey_whitelist_clients_check is changed
+
+- name: Insert postgrey_whitelist_clients file Line a Log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger postfix postgrey_whitelist_clients has changed at {{ main_cf_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_postgrey_whitelist_clients_check is changed
+
+############################### Postfix recipient_bcc  ###############
+
+- name: Check recipient_bcc file
+  copy: src={{ mail_in_files }}/recipient_bcc dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_recipient_bcc_check
+
+- name: Remove recipient_bcc file key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger postfix recipient_bcc has changed' replace='postfix recipient_bcc has changed'
+  delegate_to: localhost
+  when: copy_recipient_bcc_check is succeeded
+
+- name: Retrieving recipient_bcc file Stat Data
+  stat: path={{ postfix_d }}/recipient_bcc
+  register: recipient_bcc_status
+  when: copy_recipient_bcc_check is changed
+
+- name: Insert recipient_bcc file Line a Log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger postfix recipient_bcc has changed at {{ main_cf_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_recipient_bcc_check is changed
+
+############################### Postfix virtual  ###############
+
+- name: Check virtual file
+  copy: src={{ mail_in_files }}/virtual dest={{ postfix_d }} mode=644
+  check_mode: yes
+  register: copy_virtual_check
+
+- name: Remove virtual file key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger postfix virtual has changed' replace='postfix virtual has changed'
+  delegate_to: localhost
+  when: copy_virtual_check is succeeded
+
+- name: Retrieving virtual file Stat Data
+  stat: path={{ postfix_d }}/virtual
+  register: virtual_status
+  when: copy_virtual_check is changed
+
+- name: Insert virtual file Line a Log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger postfix virtual has changed at {{ main_cf_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_virtual_check is changed
+
+############################### clamd.conf  ###############
+
+- name: Check clamd conf file
+  copy: src={{ mail_in_files }}/clamd.conf dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_clamd_conf_check
+
+- name: Remove clamd conf file key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger clamd.conf has changed' replace='clamd.conf has changed'
+  delegate_to: localhost
+  when: copy_clamd_conf_check is succeeded
+
+- name: Retrieving clamd conf file Stat Data
+  stat: path={{ etc_d }}/clamd.conf
+  register: clamd_conf_status
+  when: copy_clamd_conf_check is changed
+
+- name: Insert clamd conf file Line a Log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger clamd.conf has changed at {{ main_cf_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_clamd_conf_check is changed
+
+
+############################### Httpd config  ###############
+
+- name: Check Httpd conf file
+  copy: src={{ mail_in_files }}/httpd.conf dest={{ httpd_d }} mode=644
+  check_mode: yes
+  register: copy_httpd_conf_check
+
+- name: Remove Httpd conf file key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger httpd.conf has changed' replace='httpd.conf has changed'
+  delegate_to: localhost
+  when: copy_httpd_conf_check is succeeded
+
+- name: Retrieving Httpd conf file Stat Data
+  stat: path={{ httpd_d }}/httpd.conf
+  register: httpd_conf_status
+  when: copy_httpd_conf_check is changed
+
+- name: Insert Httpd conf file Line a Log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger httpd.conf has changed at {{ main_cf_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_httpd_conf_check is changed
+
+
+
+
+########################### SSH ######################
+
+- name: Check Ssh Config
+  copy: src={{ mail_in_files }}/ssh_config dest={{ ssh_d }} mode=644
+  check_mode: yes
+  register: copy_ssh_check
+
+- name: Remove Ssh key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger ssh config has changed' replace='ssh config has changed'
+  delegate_to: localhost
+  when: copy_ssh_check is succeeded
+
+- name: Retrieving Ssh file stat data
+  stat: path={{ ssh_d }}/ssh_config
+  register: ssh_status
+  when: copy_ssh_check is changed
+
+- name: Insert Ssh line a log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger ssh config has changed at {{ ssh_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_ssh_check is changed
+
+######################## SSHD ######################
+
+- name: Check Sshd Config
+  copy: src={{ mail_in_files }}/sshd_config dest={{ ssh_d }} mode=600
+  check_mode: yes
+  register: copy_sshd_check
+
+- name: Remove Sshd key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger sshd config has changed' replace='sshd config has changed'
+  delegate_to: localhost
+  when: copy_sshd_check is succeeded
+
+- name: Retrieving Sshd file stat data
+  stat: path={{ ssh_d }}/sshd_config
+  register: sshd_status
+  when: copy_sshd_check is changed
+
+- name: Insert Sshd line a log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger sshd config has changed at {{ sshd_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_sshd_check is changed
+
+
+################################ Ntp ###########################
+
+- name: Check Ntp Config
+  copy: src={{ mail_in_files }}/ntp.conf dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_ntp_check
+
+- name: Remove Ntp key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger ntp conf has changed' replace='ntp conf has changed'
+  delegate_to: localhost
+  when: copy_ntp_check is succeeded
+
+- name: Retrieving ntp file stat data
+  stat: path={{ etc_d }}/ntp.conf
+  register: ntp_status
+  when: copy_ntp_check is changed
+
+- name: Insert Ntp line a log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger ntp conf has changed at {{ ntp_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_ntp_check is changed
+
+####################### Resolv #################
+
+- name: Check Resolv Config
+  copy: src={{ mail_in_files }}/resolv.conf dest={{ etc_d }} mode=664
+  check_mode: yes
+  register: copy_resolv_check
+
+- name: Remove resolv key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger resolv conf has changed' replace='resolv conf has changed'
+  delegate_to: localhost
+  when: copy_resolv_check is succeeded
+
+- name: Retrieving resolv file stat data
+  stat: path={{ etc_d }}/resolv.conf
+  register: resolv_status
+  when: copy_resolv_check is changed
+
+- name: Insert resolv line a log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger resolv conf has changed at {{ resolv_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_resolv_check is changed
+
+########################## Hosts ####################
+
+- name: Check Hosts Config
+  copy: src={{ mail_in_files }}/hosts dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_hosts_check
+
+- name: Remove Hosts key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger hosts file has changed' replace='hosts file has changed'
+  delegate_to: localhost
+  when: copy_hosts_check is succeeded
+
+- name: Retrieving hosts file stat data
+  stat: path={{ etc_d }}/hosts
+  register: hosts_status
+  when: copy_hosts_check is changed
+
+- name: Insert hosts check line a log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger hosts file has changed at {{ hosts_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_hosts_check is changed
+
+########################### Iptables ####################
+
+- name: Check Iptables Config
+  copy: src={{ mail_in_files }}/iptables dest={{ iptables_d }} mode=600
+  check_mode: yes
+  register: copy_iptables_check
+
+- name: Remove Iptables key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger iptables config has changed' replace='iptables config has changed'
+  delegate_to: localhost
+  when: copy_iptables_check is succeeded
+
+- name: Retrieving Iptables config stat data
+  stat: path={{ iptables_d }}/iptables
+  register: iptables_status
+  when: copy_iptables_check is changed
+
+- name: Insert Iptables check line a log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger iptables config has changed at {{ iptables_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_iptables_check is changed
+
+########################### shadow ####################
+
+- name: Check shadow file
+  copy: src={{ mail_in_files }}/shadow dest={{ etc_d }} mode=0000
+  check_mode: yes
+  register: copy_shadow_check
+
+- name: Remove shadow key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger shadow file has changed' replace='shadow file has changed'
+  delegate_to: localhost
+  when: copy_shadow_check is succeeded
+
+- name: Retrieving shadow file stat data
+  stat: path={{ etc_d }}/shadow
+  register: shadow_status
+  when: copy_shadow_check is changed
+
+- name: Insert shadow check line a log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger shadow file has changed at {{ shadow_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_shadow_check is changed
+
+########################### passwd ####################
+
+- name: Check passwd file
+  copy: src={{ mail_in_files }}/passwd dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_passwd_check
+
+- name: Remove passwd key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger passwd file has changed' replace='passwd file has changed'
+  delegate_to: localhost
+  when: copy_passwd_check is succeeded
+
+- name: Retrieving passwd file stat data
+  stat: path={{ etc_d }}/passwd
+  register: passwd_status
+  when: copy_passwd_check is changed
+
+- name: Insert passwd check line a log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger passwd file has changed at {{ shadow_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_passwd_check is changed
+
+########################### group ####################
+
+- name: Check group file
+  copy: src={{ mail_in_files }}/group dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_group_check
+
+- name: Remove group key word a log file
+  replace: dest={{ mail_in_log }} regexp='trigger group file has changed' replace='group file has changed'
+  delegate_to: localhost
+  when: copy_group_check is succeeded
+
+- name: Retrieving group file stat data
+  stat: path={{ etc_d }}/group
+  register: group_status
+  when: copy_group_check is changed
+
+- name: Insert group check line a log file
+  lineinfile: dest={{ mail_in_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger group file has changed at {{ shadow_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_group_check is changed
+
+...
+

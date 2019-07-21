@@ -1,0 +1,268 @@
+---
+# tasks file for dns_out_1_dmz_check
+
+############################### named.conf  ###############
+
+- name: Check Named Conf
+  copy: src={{ dns_out_2_files }}/named.conf dest={{ chroot_etc_d }} mode=644
+  check_mode: yes
+  register: copy_named_check
+
+- name: Remove Named conf key word a log file
+  replace: dest={{ dns_out_2_log }} regexp='trigger named conf has changed' replace='named conf has changed'
+  delegate_to: localhost
+  when: copy_named_check is succeeded
+
+- name: Retrieving named conf Stat Data
+  stat: path={{ chroot_etc_d }}/named.conf
+  register: named_status
+  when: copy_named_check is changed
+
+- name: Insert named Line a Log file
+  lineinfile: dest={{ dns_out_2_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger named conf has changed at {{ named_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_named_check is changed
+
+########################### 172.0.1.0 ######################
+
+- name: Check 172 0 1 0 Zone
+  copy: src={{ dns_out_2_files }}/172.0.1.0 dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_0_1_check
+
+- name: Remove 172 0 1 0 key word a log file
+  replace: dest={{ dns_out_2_log }} regexp='trigger 172.0.1.0 Zone has changed' replace='172.0.1.0 Zone has changed'
+  delegate_to: localhost
+  when: copy_0_1_check is succeeded
+
+- name: Retrieving 172 0 1 0 file stat data
+  stat: path={{ chroot_named_d }}/172.0.1.0
+  register: 0_1_status
+  when: copy_0_1_check is changed
+
+- name: Insert 172 0 1 0 line a log file
+  lineinfile: dest={{ dns_out_2_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger 172.0.1.0 Zone has changed at {{ 0_1_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_0_1_check is changed
+
+########################### 172.0.2.0 ######################
+
+- name: Check 172 0 2 0 Zone
+  copy: src={{ dns_out_2_files }}/172.0.2.0 dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_0_2_check
+
+- name: Remove 172 0 2 0 key word a log file
+  replace: dest={{ dns_out_2_log }} regexp='trigger 172.0.2.0 Zone has changed' replace='172.0.2.0 Zone has changed'
+  delegate_to: localhost
+  when: copy_0_2_check is succeeded
+
+- name: Retrieving 172 0 2 0 file stat data
+  stat: path={{ chroot_named_d }}/172.0.2.0
+  register: 0_2_status
+  when: copy_0_2_check is changed
+
+- name: Insert 172 0 2 0 line a log file
+  lineinfile: dest={{ dns_out_2_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger 172.0.2.0 Zone has changed at {{ 0_2_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_0_2_check is changed
+
+########################### 172.0.3.0 ######################
+
+- name: Check 172 0 3 0 Zone
+  copy: src={{ dns_out_2_files }}/172.0.3.0 dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_0_3_check
+
+- name: Remove 172 0 3 0 key word a log file
+  replace: dest={{ dns_out_2_log }} regexp='trigger 172.0.3.0 Zone has changed' replace='172.0.3.0 Zone has changed'
+  delegate_to: localhost
+  when: copy_0_3_check is succeeded
+
+- name: Retrieving 172 0 3 0 file stat data
+  stat: path={{ chroot_named_d }}/172.0.3.0
+  register: 0_3_status
+  when: copy_0_3_check is changed
+
+- name: Insert 172 0 3 0 line a log file
+  lineinfile: dest={{ dns_out_2_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger 172.0.3.0 Zone has changed at {{ 0_3_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_0_3_check is changed
+
+########################### 172.0.4.0 ######################
+
+- name: Check 172 0 4 0 Zone
+  copy: src={{ dns_out_2_files }}/172.0.4.0 dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_0_4_check
+
+- name: Remove 172 0 4 0 key word a log file
+  replace: dest={{ dns_out_2_log }} regexp='trigger 172.0.4.0 Zone has changed' replace='172.0.4.0 Zone has changed'
+  delegate_to: localhost
+  when: copy_0_4_check is succeeded
+
+- name: Retrieving 172 0 4 0 file stat data
+  stat: path={{ chroot_named_d }}/172.0.4.0
+  register: 0_4_status
+  when: copy_0_4_check is changed
+
+- name: Insert 172 0 4 0 line a log file
+  lineinfile: dest={{ dns_out_2_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger 172.0.4.0 Zone has changed at {{ 0_4_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_0_4_check is changed  
+
+########################### h-dmz ######################
+
+- name: Check h dmz Zone
+  copy: src={{ dns_out_2_files }}/h-dmz dest={{ chroot_named_d }} mode=644
+  check_mode: yes
+  register: copy_h_dmz_check
+
+- name: Remove h dmz key word a log file
+  replace: dest={{ dns_out_2_log }} regexp='trigger h-dmz Zone has changed' replace='h-dmz Zone has changed'
+  delegate_to: localhost
+  when: copy_h_dmz_check is succeeded
+
+- name: Retrieving h dmz file stat data
+  stat: path={{ chroot_named_d }}/h-dmz
+  register: h_dmz_status
+  when: copy_h_dmz_check is changed
+
+- name: Insert h dmz line a log file
+  lineinfile: dest={{ dns_out_2_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger h-dmz Zone has changed at {{ h_dmz_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_h_dmz_check is changed
+  
+########################### SSH ######################
+
+- name: Check Ssh Config
+  copy: src={{ dns_out_2_files }}/ssh_config dest={{ ssh_d }} mode=644
+  check_mode: yes
+  register: copy_ssh_check
+
+- name: Remove Ssh key word a log file
+  replace: dest={{ dns_out_2_log }} regexp='trigger ssh config has changed' replace='ssh config has changed'
+  delegate_to: localhost
+  when: copy_ssh_check is succeeded
+
+- name: Retrieving Ssh file stat data
+  stat: path={{ ssh_d }}/ssh_config
+  register: ssh_status
+  when: copy_ssh_check is changed
+
+- name: Insert Ssh line a log file
+  lineinfile: dest={{ dns_out_2_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger ssh config has changed at {{ ssh_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_ssh_check is changed
+
+######################## SSHD ######################
+
+- name: Check Sshd Config
+  copy: src={{ dns_out_2_files }}/sshd_config dest={{ ssh_d }} mode=600
+  check_mode: yes
+  register: copy_sshd_check
+
+- name: Remove Sshd key word a log file
+  replace: dest={{ dns_out_2_log }} regexp='trigger sshd config has changed' replace='sshd config has changed'
+  delegate_to: localhost
+  when: copy_sshd_check is succeeded
+
+- name: Retrieving Sshd file stat data
+  stat: path={{ ssh_d }}/sshd_config
+  register: sshd_status
+  when: copy_sshd_check is changed
+
+- name: Insert Sshd line a log file
+  lineinfile: dest={{ dns_out_2_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger sshd config has changed at {{ sshd_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_sshd_check is changed
+  
+################################ Ntp ###########################
+
+- name: Check Ntp Config
+  copy: src={{ dns_out_2_files }}/ntp.conf dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_ntp_check
+
+- name: Remove Ntp key word a log file
+  replace: dest={{ dns_out_2_log }} regexp='trigger ntp conf has changed' replace='ntp conf has changed'
+  delegate_to: localhost
+  when: copy_ntp_check is succeeded
+
+- name: Retrieving ntp file stat data
+  stat: path={{ etc_d }}/ntp.conf
+  register: ntp_status
+  when: copy_ntp_check is changed
+
+- name: Insert Ntp line a log file
+  lineinfile: dest={{ dns_out_2_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger ntp conf has changed at {{ ntp_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_ntp_check is changed
+
+####################### Resolv #################
+
+- name: Check Resolv Config
+  copy: src={{ dns_out_2_files }}/resolv.conf dest={{ etc_d }} mode=664
+  check_mode: yes
+  register: copy_resolv_check
+
+- name: Remove resolv key word a log file
+  replace: dest={{ dns_out_2_log }} regexp='trigger resolv conf has changed' replace='resolv conf has changed'
+  delegate_to: localhost
+  when: copy_resolv_check is succeeded
+
+- name: Retrieving resolv file stat data
+  stat: path={{ etc_d }}/resolv.conf
+  register: resolv_status
+  when: copy_resolv_check is changed
+
+- name: Insert resolv line a log file
+  lineinfile: dest={{ dns_out_2_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger resolv conf has changed at {{ resolv_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_resolv_check is changed
+
+########################### Hosts ####################
+
+- name: Check Hosts Config
+  copy: src={{ dns_out_2_files }}/hosts dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_hosts_check
+
+- name: Remove Hosts key word a log file
+  replace: dest={{ dns_out_2_log }} regexp='trigger hosts file has changed' replace='hosts file has changed'
+  delegate_to: localhost
+  when: copy_hosts_check is succeeded
+
+- name: Retrieving hosts file stat data
+  stat: path={{ etc_d }}/hosts
+  register: hosts_status
+  when: copy_hosts_check is changed
+
+- name: Insert hosts check line a log file
+  lineinfile: dest={{ dns_out_2_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger hosts file has changed at {{ hosts_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_hosts_check is changed
+########################### Iptables ####################
+
+- name: Check Iptables Config
+  copy: src={{ dns_out_2_files }}/iptables dest={{ iptables_d }} mode=600
+  check_mode: yes
+  register: copy_iptables_check
+
+- name: Remove Iptables key word a log file
+  replace: dest={{ dns_out_2_log }} regexp='trigger iptables config has changed' replace='iptables config has changed'
+  delegate_to: localhost
+  when: copy_iptables_check is succeeded
+
+- name: Retrieving Iptables config stat data
+  stat: path={{ iptables_d }}/iptables
+  register: iptables_status
+  when: copy_iptables_check is changed
+
+- name: Insert Iptables check line a log file
+  lineinfile: dest={{ dns_out_2_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger iptables config has changed at {{ iptables_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_iptables_check is changed
+
+...
+  

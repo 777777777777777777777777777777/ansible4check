@@ -1,0 +1,14 @@
+---
+# defaults file for mail_in
+
+ssh_d: /etc/ssh
+etc_d: /etc
+
+iptables_d: /etc/sysconfig
+
+postfix_d: /etc/postfix
+
+httpd_d: /etc/httpd/conf
+
+local_files: /etc/ansible/roles/mail_in/files
+...

@@ -1,0 +1,4 @@
+# postgrey whitelist for mail client hostnames
+# --------------------------------------------
+# put this file in /etc/postfix or specify its path
+# with --whitelist-clients=xxx

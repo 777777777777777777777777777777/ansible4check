@@ -1,0 +1,17 @@
+---
+# defaults file for mail_in_check
+
+ssh_d: /etc/ssh
+etc_d: /etc
+
+iptables_d: /etc/sysconfig
+
+postfix_d: /etc/postfix
+
+dovecot_d: /etc/dovecot
+
+httpd_d: /etc/httpd/conf
+
+mail_in_files: /etc/ansible/roles/mail_in/files
+mail_in_log: /var/log/ansible/mail_in.log
+

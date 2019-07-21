@@ -1,0 +1,247 @@
+---
+# tasks file for web_http_check
+
+############################### Httpd  ###############
+
+- name: Check httpd Config
+  copy: src={{ web_http_files }}/httpd.conf dest={{ httpd_d }} mode=644
+  check_mode: yes
+  register: copy_httpd_check
+
+- name: Remove httpd key word a log file
+  replace: dest={{ web_http_log }} regexp='trigger httpd conf has changed' replace='httpd conf has changed'
+  delegate_to: localhost
+  when: copy_httpd_check is succeeded
+
+- name: Retrieving httpd file stat data
+  stat: path={{ httpd_d }}/httpd.conf
+  register: httpd_status
+  when: copy_httpd_check is changed
+
+- name: Insert httpd line a log file
+  lineinfile: dest={{ web_http_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger httpd conf has changed at {{ httpd_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_httpd_check is changed
+
+############################### vhosts.conf  ###############
+
+- name: Check vhosts conf
+  copy: src={{ web_http_files }}/vhosts.conf dest={{ httpd_conf_d }} mode=644
+  check_mode: yes
+  register: copy_vhosts_conf_check
+
+- name: Remove vhosts conf key word a log file
+  replace: dest={{ web_http_log }} regexp='trigger vhosts.conf has changed' replace='vhosts.conf has changed'
+  delegate_to: localhost
+  when: copy_vhosts_conf_check is succeeded
+
+- name: Retrieving vhosts conf file stat data
+  stat: path={{ httpd_conf_d }}/vhosts.conf
+  register: vhosts_conf_status
+  when: copy_vhosts_conf_check is changed
+
+- name: Insert vhosts conf line a log file
+  lineinfile: dest={{ web_http_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger vhosts.conf has changed at {{ vhosts_conf_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_vhosts_conf_check is changed
+
+########################### SSH ######################
+
+- name: Check Ssh Config
+  copy: src={{ web_http_files }}/ssh_config dest={{ ssh_d }} mode=644
+  check_mode: yes
+  register: copy_ssh_check
+
+- name: Remove Ssh key word a log file
+  replace: dest={{ web_http_log }} regexp='trigger ssh config has changed' replace='ssh config has changed'
+  delegate_to: localhost
+  when: copy_ssh_check is succeeded
+
+- name: Retrieving Ssh file stat data
+  stat: path={{ ssh_d }}/ssh_config
+  register: ssh_status
+  when: copy_ssh_check is changed
+
+- name: Insert Ssh line a log file
+  lineinfile: dest={{ web_http_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger ssh config has changed at {{ ssh_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_ssh_check is changed
+
+######################## SSHD ######################
+
+- name: Check Sshd Config
+  copy: src={{ web_http_files }}/sshd_config dest={{ ssh_d }} mode=600
+  check_mode: yes
+  register: copy_sshd_check
+
+- name: Remove Sshd key word a log file
+  replace: dest={{ web_http_log }} regexp='trigger sshd config has changed' replace='sshd config has changed'
+  delegate_to: localhost
+  when: copy_sshd_check is succeeded
+
+- name: Retrieving Sshd file stat data
+  stat: path={{ ssh_d }}/sshd_config
+  register: sshd_status
+  when: copy_sshd_check is changed
+
+- name: Insert Sshd line a log file
+  lineinfile: dest={{ web_http_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger sshd config has changed at {{ sshd_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_sshd_check is changed
+
+################################ Ntp ###########################
+
+- name: Check Ntp Config
+  copy: src={{ web_http_files }}/ntp.conf dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_ntp_check
+
+- name: Remove Ntp key word a log file
+  replace: dest={{ web_http_log }} regexp='trigger ntp conf has changed' replace='ntp conf has changed'
+  delegate_to: localhost
+  when: copy_ntp_check is succeeded
+
+- name: Retrieving ntp file stat data
+  stat: path={{ etc_d }}/ntp.conf
+  register: ntp_status
+  when: copy_ntp_check is changed
+
+- name: Insert Ntp line a log file
+  lineinfile: dest={{ web_http_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger ntp conf has changed at {{ ntp_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_ntp_check is changed
+
+####################### Resolv #################
+
+- name: Check Resolv Config
+  copy: src={{ web_http_files }}/resolv.conf dest={{ etc_d }} mode=664
+  check_mode: yes
+  register: copy_resolv_check
+
+- name: Remove resolv key word a log file
+  replace: dest={{ web_http_log }} regexp='trigger resolv conf has changed' replace='resolv conf has changed'
+  delegate_to: localhost
+  when: copy_resolv_check is succeeded
+
+- name: Retrieving resolv file stat data
+  stat: path={{ etc_d }}/resolv.conf
+  register: resolv_status
+  when: copy_resolv_check is changed
+
+- name: Insert resolv line a log file
+  lineinfile: dest={{ web_http_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger resolv conf has changed at {{ resolv_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_resolv_check is changed
+
+########################### Hosts ####################
+
+- name: Check Hosts Config
+  copy: src={{ web_http_files }}/hosts dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_hosts_check
+
+- name: Remove Hosts key word a log file
+  replace: dest={{ web_http_log }} regexp='trigger hosts file has changed' replace='hosts file has changed'
+  delegate_to: localhost
+  when: copy_hosts_check is succeeded
+
+- name: Retrieving hosts file stat data
+  stat: path={{ etc_d }}/hosts
+  register: hosts_status
+  when: copy_hosts_check is changed
+
+- name: Insert hosts check line a log file
+  lineinfile: dest={{ web_http_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger hosts file has changed at {{ hosts_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_hosts_check is changed
+
+########################### Iptables ####################
+
+- name: Check Iptables Config
+  copy: src={{ web_http_files }}/iptables dest={{ iptables_d }} mode=600
+  check_mode: yes
+  register: copy_iptables_check
+
+- name: Remove Iptables key word a log file
+  replace: dest={{ web_http_log }} regexp='trigger iptables config has changed' replace='iptables config has changed'
+  delegate_to: localhost
+  when: copy_iptables_check is succeeded
+
+- name: Retrieving Iptables config stat data
+  stat: path={{ iptables_d }}/iptables
+  register: iptables_status
+  when: copy_iptables_check is changed
+
+- name: Insert Iptables check line a log file
+  lineinfile: dest={{ web_http_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger iptables config has changed at {{ iptables_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_iptables_check is changed
+
+########################### shadow ####################
+  
+- name: Check shadow file
+  copy: src={{ web_http_files }}/shadow dest={{ etc_d }} mode=0000
+  check_mode: yes
+  register: copy_shadow_check
+
+- name: Remove shadow key word a log file
+  replace: dest={{ web_http_log }} regexp='trigger shadow file has changed' replace='shadow file has changed'
+  delegate_to: localhost
+  when: copy_shadow_check is succeeded
+
+- name: Retrieving shadow file stat data
+  stat: path={{ etc_d }}/shadow
+  register: shadow_status
+  when: copy_shadow_check is changed
+
+- name: Insert shadow check line a log file
+  lineinfile: dest={{ web_http_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger shadow file has changed at {{ shadow_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_shadow_check is changed
+
+########################### passwd ####################
+
+- name: Check passwd file
+  copy: src={{ web_http_files }}/passwd dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_passwd_check
+
+- name: Remove passwd key word a log file
+  replace: dest={{ web_http_log }} regexp='trigger passwd file has changed' replace='passwd file has changed'
+  delegate_to: localhost
+  when: copy_passwd_check is succeeded
+
+- name: Retrieving passwd file stat data
+  stat: path={{ etc_d }}/passwd
+  register: passwd_status
+  when: copy_passwd_check is changed
+
+- name: Insert passwd check line a log file
+  lineinfile: dest={{ web_http_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger passwd file has changed at {{ shadow_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_passwd_check is changed
+
+########################### group ####################
+
+- name: Check group file
+  copy: src={{ web_http_files }}/group dest={{ etc_d }} mode=644
+  check_mode: yes
+  register: copy_group_check
+
+- name: Remove group key word a log file
+  replace: dest={{ web_http_log }} regexp='trigger group file has changed' replace='group file has changed'
+  delegate_to: localhost
+  when: copy_group_check is succeeded
+
+- name: Retrieving group file stat data
+  stat: path={{ etc_d }}/group
+  register: group_status
+  when: copy_group_check is changed
+
+- name: Insert group check line a log file
+  lineinfile: dest={{ web_http_log }} line="Host {{ansible_default_ipv4.address }} Check date {{ ansible_date_time.date }} {{ ansible_date_time.time }} trigger group file has changed at {{ shadow_status.stat.mtime | float_to_date }}"
+  delegate_to: localhost
+  when: copy_group_check is changed
+
+...
+

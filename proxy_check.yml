@@ -1,0 +1,11 @@
+---
+- name: proxy check config
+  hosts: proxy_server
+  become: yes
+
+  roles:
+     - proxy_check
+...
+
+
+

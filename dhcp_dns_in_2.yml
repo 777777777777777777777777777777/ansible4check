@@ -1,0 +1,8 @@
+---
+- name: Change Config 10.233.224.3 dhcp_dns_in_slave
+  hosts: dhcp_dns_in_2
+  become: yes
+
+  roles:
+    - dhcp_dns_in_2
+...

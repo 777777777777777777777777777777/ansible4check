@@ -1,0 +1,8 @@
+---
+- name: proxy change config
+  hosts: proxy
+  become: yes
+
+  roles:
+     - proxy
+...

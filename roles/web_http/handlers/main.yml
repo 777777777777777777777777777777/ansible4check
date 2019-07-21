@@ -1,0 +1,14 @@
+---
+# handlers file for dns_out_1_dmz
+- name: Restart Httpd
+  service: name=httpd state=restarted
+
+- name: Restart Sshd
+  service: name=sshd state=restarted
+
+- name: Restart Ntp
+  service: name=ntpd state=restarted
+
+...
+
+

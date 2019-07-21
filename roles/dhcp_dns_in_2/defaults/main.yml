@@ -1,0 +1,16 @@
+---
+# defaults file for dhcp_dns_in_2
+
+chroot_etc_d: /var/named/chroot/etc
+
+dhcpd_d: /etc/dhcp
+
+ssh_d: /etc/ssh
+etc_d: /etc
+
+iptables_d: /etc/sysconfig
+
+local_files: /etc/ansible/roles/dhcp_dns_in_2/files
+
+...
+

@@ -1,0 +1,13 @@
+---
+# handlers file for proxy
+
+- name: Restart Sshd
+  service: name=sshd state=restarted
+
+- name: Restart Ntp
+  service: name=ntpd state=restarted
+
+- name: Restart Squid
+  service: name=squd state=restarted
+
+...

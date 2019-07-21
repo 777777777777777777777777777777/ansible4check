@@ -1,0 +1,15 @@
+---
+# handlers file for dns_in_1
+
+- name: Restart Named
+  service: name=named state=restarted
+
+- name: Restart Sshd
+  service: name=sshd state=restarted
+
+- name: Restart Ntp
+  service: name=ntpd state=restarted
+
+...
+
+

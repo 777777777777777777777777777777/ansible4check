@@ -1,0 +1,26 @@
+#Ansible inventory file
+
+[dns_out_master]
+dns_out_1_dmz ansible_host=172.0.1.99
+
+[dns_out_master_slave]
+dns_out_2 ansible_host=172.0.1.228
+
+
+[web-http-server]
+web_http ansible_host=172.0.1.47
+
+[proxy_server]
+proxy ansible_host=172.0.1.25
+
+[dns_in_master]
+dns_in_1 ansible_host=10.0.1.88
+
+[mail_in]
+mail_inside ansible_host=10.0.1.77
+
+[mail_out]
+mail_outside ansible_host=172.0.1.98
+
+[dhcp_dns_in_2]
+dhcp_dns_in_slave ansible_host=10.0.1.35
